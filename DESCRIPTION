@@ -1,0 +1,20 @@
+Package: voxel
+Title: Voxelwise Analysis of NIfTI Data
+Version: 1.2.1
+Authors@R: c(person("Angel", "Garcia de la Garza", email = "agarciadlg@gmail.com", role = c("aut", "cre")),
+             person("Simon", "Vandekar", email= "simonv@mail.med.upenn.edu", role="aut"),
+             person("David", "Roalf", email= "roalf@mail.med.upenn.edu", role="aut"),
+             person("Kosha", "Ruparel", email= "kruparel@mail.med.upenn.edu", role="aut"),
+             person("Ruben", "Gur", email= "gur@mail.med.upenn.edu", role="aut"),
+             person("Raquel", "Gur", email= "raquel@mail.med.upenn.edu", role="aut"),
+             person("Theodore", "Satterthwaite", email= "sattertt@mail.med.upenn.edu", role="aut"),
+             person("R. Taki", "Shinohara", email= "rshi@mail.med.upenn.edu", role="aut")
+             )
+Description: Functions for the mass-univariate voxelwise analysis of NIfTI data.
+Depends:
+    R (>= 3.2.3)
+License: 	GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
+Imports: parallel,stats,mgcv,gamm4,oro.nifti,lmerTest,ggplot2
