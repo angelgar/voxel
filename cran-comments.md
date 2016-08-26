@@ -15,5 +15,11 @@ New submission
 
 This is my first submission
 
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Explained the meaning of NIfTI and included a reference in the description.
+
+
 ## Downstream dependencies
 There are currently no downstream dependencies for this package
