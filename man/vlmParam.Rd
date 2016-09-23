@@ -28,7 +28,7 @@ vlmParam(image, mask, fourdOut = NULL, formula, subjData,
 Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function is able to run a Linear Model using the stats package. 
+This function is able to run a Linear Model using the stats package.
 The analysis will run in all voxels in in the mask and will and will return parametric coefficients at each voxel.
 }
 \examples{

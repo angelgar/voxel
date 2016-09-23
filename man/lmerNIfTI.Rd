@@ -33,14 +33,15 @@ lmerNIfTI(image, mask, fourdOut = NULL, formula, subjData,
 Returns parametric maps of the fitted models
 }
 \description{
-This function is able to run a Linear Mixed Effect Model using the lmer() function. 
+This function is able to run a Linear Mixed Effect Model using the lmer() function.
 The function relies on lmerTest to create p-values using the Satterthwaite Approximation.
 The analysis will run in all voxels in in the mask and will return parametric coefficients.
-The function will create parametric maps according to the model selected. 
+The function will create parametric maps according to the model selected.
 The function will return a p-map, t-map, z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms.
 You can select which type of p-value correction you want done on the map.
 }
 \examples{
+\dontrun{
 
 
 image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
@@ -49,6 +50,6 @@ set.seed(1)
 covs <- data.frame(x = runif(25), id = rep(1:5,5))
 fm1 <- "~ x + (1|id)"
 models <- lmerNIfTI(image, mask, formula = fm1, subjData = covs, method="fdr", ncores = 1)
-
+}
 }
 

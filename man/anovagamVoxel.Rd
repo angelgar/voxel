@@ -35,7 +35,7 @@ anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
 List of models fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam). 
+This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam).
 The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
 Please check anova::gam to learn more about the function of the arguments that are passed to anova.gam. Multi-model calls are disabled.
 }
@@ -45,7 +45,7 @@ mask <- oro.nifti::nifti(img = array(0:1, dim = c(4,4,4,1)))
 set.seed(1)
 covs <- data.frame(x = runif(25), y=runif(25))
 fm1 <- "~ s(x) + y"
-models <- anovagamVoxel(image=image, mask=mask, 
+models <- anovagamVoxel(image=image, mask=mask,
               formula=fm1, subjData=covs, ncores = 1)
 }
 
