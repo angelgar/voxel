@@ -48,4 +48,3 @@ fm1 <- "~ x + y + (1|id)"
 models <- anovalmerVoxel(image, mask, formula = fm1, subjData = covs, ncores = 1, REML=TRUE)
 
 }
-

@@ -55,4 +55,3 @@ models <- gammNIfTI(image, mask, formula = fm1,
 
 
 }
-

@@ -43,4 +43,3 @@ fm1 <- "~ x + (1|id)"
 models <- lmerCluster(image, mask, formula = fm1, subjData = covs, ncores = 1, REML=TRUE)
 
 }
-

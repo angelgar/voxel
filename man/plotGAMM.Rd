@@ -8,7 +8,7 @@ plotGAMM(gammFit, smooth.cov, groupCovs = NULL, orderedAsFactor = T,
   rawOrFitted = F, plotCI = T, grouping = NULL)
 }
 \arguments{
-\item{gammFit}{fitted gam model as produced by mgcv::gam()}
+\item{gammFit}{fitted gam model as produced by gamm4::gamm()}
 
 \item{smooth.cov}{(character) name of smooth term to be plotted}
 
@@ -47,4 +47,3 @@ plot2
 \seealso{
 Other Plotting: \code{\link{plotGAM}}
 }
-

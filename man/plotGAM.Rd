@@ -44,4 +44,3 @@ plot2 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = "group",
 \seealso{
 Other Plotting: \code{\link{plotGAMM}}
 }
-

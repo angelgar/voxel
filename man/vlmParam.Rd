@@ -39,4 +39,3 @@ covs <- data.frame(x = runif(25), y = runif(25))
 fm1 <- "~ x + y"
 models <- vlmParam(image=image, mask=mask, formula=fm1, subjData=covs, ncores = 1)
 }
-

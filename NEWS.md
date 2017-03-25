@@ -3,6 +3,11 @@
 Functions for the voxelwise analysis of NIfTI data in R.
 
 #### Change log
+v1.2.2 2017.03
+
+* Minor edits to documentation
+
+
 v1.2.1 2016.08
 
 * First release

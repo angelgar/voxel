@@ -40,4 +40,3 @@ fm1 <- "~ x + y"
 models <- anovalmVoxel(image=image, mask=mask, 
               formula=fm1, subjData=covs, ncores = 1)
 }
-

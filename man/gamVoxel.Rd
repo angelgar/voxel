@@ -39,4 +39,3 @@ fm1 <- "~ s(x)"
 models <- gamVoxel(image=image, mask=mask, 
               formula=fm1, subjData=covs, ncores = 1)
 }
-

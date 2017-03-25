@@ -23,4 +23,3 @@ fm1 <- "~ x1"
 formula <- listFormula(x, formula = fm1)
 }
 \keyword{internal}
-

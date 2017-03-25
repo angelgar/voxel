@@ -34,4 +34,3 @@ models <- vlmParam(image=image, mask=mask,
               formula=fm1, subjData=covs, ncores = 1)
 Maps <- parMap(models, mask, method="fdr")
 }
-

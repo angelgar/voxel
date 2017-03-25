@@ -51,4 +51,3 @@ fm1 <- "~ x + (1|id)"
 models <- lmerNIfTI(image, mask, formula = fm1, subjData = covs, method="fdr", ncores = 1)
 
 }
-

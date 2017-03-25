@@ -53,4 +53,3 @@ randomFormula <- "~(1|id)"
 models <- anovagammVoxel(image, mask, formula = f1, randomFormula = randomFormula, 
                                                              subjData = covs, ncores = 1, REML=TRUE)
 }
-

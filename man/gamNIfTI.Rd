@@ -48,4 +48,3 @@ fm1 <- "~ x + y"
 Maps <- gamNIfTI(image=image, mask=mask, 
               formula=fm1, subjData=covs, ncores = 1, method="fdr")
 }
-

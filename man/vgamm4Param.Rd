@@ -46,4 +46,3 @@ models <- vgamm4Param(image, mask, formula = fm1,
                  randomFormula = randomFormula, subjData = covs, ncores = 1, REML=TRUE)
 
 }
-
