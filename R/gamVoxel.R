@@ -12,8 +12,8 @@
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to gam()
 #' 
-#'  @return List of models fitted to each voxel over the masked images passed to function.
-#' 
+#' @return List of models fitted to each voxel over the masked images passed to function.
+#' @keywords internal
 #' @export
 #' @examples
 #' image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))

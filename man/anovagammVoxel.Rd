@@ -2,7 +2,7 @@
 % Please edit documentation in R/anovagammVoxel.R
 \name{anovagammVoxel}
 \alias{anovagammVoxel}
-\title{Computes analysis of variance tables for a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image within a mask.}
+\title{Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Mixed Effects Model.}
 \usage{
 anovagammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
   dispersion = NULL, freq = FALSE, p.type = 0, mc.preschedule = TRUE,
@@ -11,13 +11,13 @@ anovagammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}
 
-\item{mask}{Input mask of type 'nifti' or path to mask. Must be a binary mask}
+\item{mask}{Input mask of type 'nifti' or path to mask. Must be a binary.}
 
-\item{fourdOut}{To be passed to mergeNifti, This is the path and file name without the suffix to save the fourd file. Default (NULL) means script won't write out 4D image.}
+\item{fourdOut}{To be passed to mergeNifti, This is the output path to write out the fourd file. Do not include a suffix (i.e. .nii.gz). Default (NULL) means script won't write out 4D image.}
 
 \item{formula}{Must be a formula passed to gamm4()}
 
-\item{randomFormula}{Random effects formual passed to gamm4()}
+\item{randomFormula}{Random effects formula passed to gamm4()}
 
 \item{subjData}{Dataframe containing all the covariates used for the analysis}
 
@@ -27,7 +27,7 @@ anovagammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
 
 \item{p.type}{To be passed to mgcv::anova.gam, Defaults to 0. Exact test statistics o use for smooth terms.}
 
-\item{mc.preschedule}{Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply}
+\item{mc.preschedule}{To be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply}
 
 \item{ncores}{Number of cores to use}
 
@@ -37,19 +37,21 @@ anovagammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
 Returns list of models fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function computes analysis of variance tables for the fitted models after running a Generalized Additive Mixed Effects Model (from gamm4::gamm4). 
-The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-Please check anova::gam to learn more about the function of the arguments that are passed to anova.gam. Multi-model calls are disabled.
+This function computes analysis of variance tables for the fitted Generalized Additive Mixed Effects (from gamm4::gamm4) models. 
+The analysis will run in all voxels in the specified mask and will return a list with the ANOVA table at each voxel.
+Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled.
 }
 \examples{
 
 
 image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
-mask <- oro.nifti::nifti(img = array(c(rep(0,15), rep(1,1)), dim = c(4,4,4,1)))
+mask <- oro.nifti::nifti(img = array(data = c(rep(0,15), rep(1,1)), 
+                                     dim = c(4,4,4,1)))
 set.seed(1)
 covs <- data.frame(x = runif(25), y=runif(25), id = rep(1:5,5))
 f1 <- "~ s(x) + y"
 randomFormula <- "~(1|id)"
-models <- anovagammVoxel(image, mask, formula = f1, randomFormula = randomFormula, 
-                                                             subjData = covs, ncores = 1, REML=TRUE)
+models <- anovagammVoxel(image, mask, formula = f1, 
+                              randomFormula = randomFormula, 
+                              subjData = covs, ncores = 1, REML=TRUE)
 }

@@ -49,7 +49,7 @@ set.seed(1)
 covs <- data.frame(x = runif(25), y = runif(25), id = rep(1:5,5))
 fm1 <- "~ s(x) + s(y)"
 randomFormula <- "~(1|id)"
-models <- gammNIfTI(image, mask, formula = fm1, 
+Maps <- gammNIfTI(image, mask, formula = fm1, 
                  randomFormula = randomFormula, subjData = covs, ncores = 1,
                  method="fdr", REML=TRUE)
 

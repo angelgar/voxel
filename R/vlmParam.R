@@ -14,7 +14,7 @@
 #' @param ... Additional arguments passed to lm()
 #' 
 #' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
-#' 
+#' @keywords internal
 #' @export
 #' @examples
 #' image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))

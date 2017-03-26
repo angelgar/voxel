@@ -15,6 +15,7 @@
 #' @param ... Additional arguments passed to gamm4()
 #' 
 #' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
+#' @keywords internal
 #' @export
 #' 
 #' @examples

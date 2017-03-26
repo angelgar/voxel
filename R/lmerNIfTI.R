@@ -30,7 +30,7 @@
 #' set.seed(1)
 #' covs <- data.frame(x = runif(25), id = rep(1:5,5))
 #' fm1 <- "~ x + (1|id)"
-#' models <- lmerNIfTI(image, mask, formula = fm1, subjData = covs, method="fdr", ncores = 1)
+#' Maps <- lmerNIfTI(image, mask, formula = fm1, subjData = covs, method="fdr", ncores = 1)
 #' 
 
 

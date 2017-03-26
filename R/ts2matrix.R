@@ -4,6 +4,7 @@
 #' Each column represents the same voxel in the xyz array while the rows represent the t-dimention.
 #' @param image Input image of type 'nifti'
 #' @param mask Input mask of type 'nifti'. Must be a binary mask
+#' @keywords internal
 #' @export
 #' @examples
 #' 

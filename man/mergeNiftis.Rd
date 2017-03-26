@@ -24,3 +24,4 @@ Returns a merged NIfTI image
 \description{
 This function merges nifti images together in a specified direction.
 }
+\keyword{internal}

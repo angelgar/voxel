@@ -40,3 +40,4 @@ fm1 <- "~ x"
 models <- lmVoxel(image=image, mask=mask, 
               formula=fm1, subjData=covs, ncores = 1)
 }
+\keyword{internal}

@@ -13,6 +13,7 @@
 #' @param ... Additional arguments passed to lm()
 #' 
 #' @return Returns list of models fitted to each voxel over the masked images passed to function.
+#' @keywords internal
 #' 
 #' @export
 #' @examples

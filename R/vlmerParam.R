@@ -15,6 +15,7 @@
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to lmer()
 #' 
+#' @keywords internal
 #' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
 #' @export
 #' 

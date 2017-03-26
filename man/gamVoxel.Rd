@@ -22,9 +22,10 @@ gamVoxel(image, mask, fourdOut = NULL, formula, subjData,
 
 \item{ncores}{Number of cores to use}
 
-\item{...}{Additional arguments passed to gam()
-
- @return List of models fitted to each voxel over the masked images passed to function.}
+\item{...}{Additional arguments passed to gam()}
+}
+\value{
+List of models fitted to each voxel over the masked images passed to function.
 }
 \description{
 This function is able to run a Generalized Additive Model (GAM) using the mgcv package. 
@@ -39,3 +40,4 @@ fm1 <- "~ s(x)"
 models <- gamVoxel(image=image, mask=mask, 
               formula=fm1, subjData=covs, ncores = 1)
 }
+\keyword{internal}

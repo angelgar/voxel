@@ -46,3 +46,4 @@ models <- gammVoxel(image = image , mask = mask, formula = fm1, randomFormula = 
                                                        subjData = covs, ncores = 1, REML=TRUE)
 
 }
+\keyword{internal}
