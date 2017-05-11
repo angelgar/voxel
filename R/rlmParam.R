@@ -1,4 +1,4 @@
-#' Run a Linear Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables
+#' Run a Linear Model on all voxels of a NIfTI and return parametric coefficients and residuals
 #'  
 #'
 #' This function is able to run a Linear Model using the stats package. 
@@ -22,10 +22,10 @@
 #' set.seed(1)
 #' covs <- data.frame(x = runif(25), y = runif(25))
 #' fm1 <- "~ x + y"
-#' models <- vlmParam(image=image, mask=mask, formula=fm1, subjData=covs, ncores = 1)
+#' models <- rlmParam(image=image, mask=mask, formula=fm1, subjData=covs, ncores = 1)
 
 
-vlmParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, ...) {
+rlmParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, ...) {
   
   if (missing(image)) { stop("image is missing")}
   if (missing(mask)) { stop("mask is missing")}
@@ -51,8 +51,8 @@ vlmParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.presch
   voxNames <- names(imageMat)
   
   
-  rm(image)
-  rm(mask)
+  #rm(image)
+  #rm(mask)
   gc()
   
   print("Created time series to matrix")
@@ -73,7 +73,8 @@ vlmParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.presch
   model <- parallel::mclapply(m, 
                               FUN = function(x, data, ...) {
                                 foo <- stats::summary.lm(stats::lm(x, data=data, ...))
-                                return(foo$coefficients)
+                                foo2 <- stats::lm(x, data=data, ...)$residuals
+                                return(list(foo$coefficients, foo2))
                               }, data=imageMat, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
   
   timeOut <- proc.time() - timeIn

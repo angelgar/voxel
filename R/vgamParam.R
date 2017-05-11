@@ -1,4 +1,4 @@
-#' Run a Generalized Additive Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables
+#' Run a Generalized Additive Model on all voxels of a NIfTI image within a mask and return parametric and smooth coefficients tables
 #'
 #' This function is able to run a Generalized Additive Model (GAM) using the mgcv package. 
 #' The analysis will run in all voxels in in the mask and will return parametric and smooth coefficients. 
