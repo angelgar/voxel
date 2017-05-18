@@ -2,7 +2,7 @@
 % Please edit documentation in R/vgamParam.R
 \name{vgamParam}
 \alias{vgamParam}
-\title{Run a Generalized Additive Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables}
+\title{Run a Generalized Additive Model on all voxels of a NIfTI image within a mask and return parametric and smooth coefficients tables}
 \usage{
 vgamParam(image, mask, fourdOut = NULL, formula, subjData,
   mc.preschedule = TRUE, ncores = 1, ...)

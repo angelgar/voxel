@@ -2,7 +2,7 @@
 % Please edit documentation in R/vlmerParam.R
 \name{vlmerParam}
 \alias{vlmerParam}
-\title{Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables}
+\title{Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables}
 \usage{
 vlmerParam(image, mask, fourdOut = NULL, formula, subjData,
   mc.preschedule = TRUE, ncores = 1, ...)

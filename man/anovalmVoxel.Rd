@@ -2,7 +2,7 @@
 % Please edit documentation in R/anovalmVoxel.R
 \name{anovalmVoxel}
 \alias{anovalmVoxel}
-\title{Computes analysis of variance tables for linear model fits on all voxels of a NIfTI image within a mask.}
+\title{Computes voxelwise analysis of variance (ANOVA) tables for a Linear Model.}
 \usage{
 anovalmVoxel(image, mask, fourdOut = NULL, formula, subjData,
   mc.preschedule = TRUE, ncores = 1, ...)
@@ -28,8 +28,9 @@ anovalmVoxel(image, mask, fourdOut = NULL, formula, subjData,
 Returns list of models fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function computes analysis of variance tables for the fitted models after running a linear model.
-The analysis will run in all voxels in in the mask and will return the ANOVA tabel for each voxel. Multi-model calls are disabled.
+This function computes analysis of variance tables for the fitted models after running a Linear Model using the stats::lm() function.
+The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
+Please check the lmerTest documentation for further information about specific arguments used in stats::anova.lm(). Multi-model calls are disabled.
 }
 \examples{
 image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))

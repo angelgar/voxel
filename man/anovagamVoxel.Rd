@@ -2,7 +2,7 @@
 % Please edit documentation in R/anovagamVoxel.R
 \name{anovagamVoxel}
 \alias{anovagamVoxel}
-\title{Computes analysis of variance tables for a generalized Additive Model on all voxels of a NIfTI image within a mask.}
+\title{Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Model.}
 \usage{
 anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
   dispersion = NULL, freq = FALSE, p.type = 0, mc.preschedule = TRUE,
@@ -32,12 +32,12 @@ anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
 \item{...}{Additional arguments passed to gam()}
 }
 \value{
-List of models fitted to each voxel over the masked images passed to function.
+Returns list of models fitted to each voxel over the masked images passed to function.
 }
 \description{
 This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam). 
 The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-Please check anova::gam to learn more about the function of the arguments that are passed to anova.gam. Multi-model calls are disabled.
+Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled.
 }
 \examples{
 image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))

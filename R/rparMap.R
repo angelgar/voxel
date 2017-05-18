@@ -15,6 +15,7 @@
 #' @param outDir Path to the folder where to output parametric maps (Default is Null, only change if you want to write maps out)
 #' 
 #' @return Return parametric maps of the fitted models
+#' @keywords internal
 #' 
 #' @export
 #' @examples
@@ -33,12 +34,12 @@
 rparMap <- function(parameters, image, mask, method, ncores, mc.preschedule, outDir = NULL) {
  
   #Generate tsresiduals
-  residualList <- mclapply(parameters, function(x) {
+  residualList <- parallel::mclapply(parameters, function(x) {
     return(x[[2]])
   }, mc.cores = ncores)
   
   #Generate tsresiduals
-  residualMat <- mcmapply(function(x) {
+  residualMat <- parallel::mcmapply(function(x) {
     return(x)
   }, residualList, mc.cores = ncores, SIMPLIFY = TRUE)
   
@@ -46,7 +47,7 @@ rparMap <- function(parameters, image, mask, method, ncores, mc.preschedule, out
   gc()
   
   #Save only parameter tables under models
-  parameters <- mclapply(parameters, function(x) {
+  parameters <- parallel::mclapply(parameters, function(x) {
     return(x[[1]])
   }, mc.cores = ncores)
   
@@ -55,22 +56,22 @@ rparMap <- function(parameters, image, mask, method, ncores, mc.preschedule, out
   residualMask <- residualMask@.Data
   
   #remove image in for memorize optimization purposes
-  dataTypeIn <- datatype(image)
-  dimPixIn <- pixdim(image)
+  dataTypeIn <- oro.nifti::datatype(image)
+  dimPixIn <- oro.nifti::pixdim(image)
   rm(image)
   gc()
   
   seq <- 1:dim(residualMat)[1]
   
   #generate 4d residual image
-  residuals <- mcmapply(function(x) {
+  residuals <- parallel::mcmapply(function(x) {
     residualMask[mask@.Data==1] <- residualMat[x,] 
     return(residualMask)
   }, seq, SIMPLIFY = "array", mc.cores = ncores, mc.preschedule= mc.preschedule)
   
   
   #Write it out 
-  residualNii <- nifti(residuals, datatype=dataTypeIn, pixdim=dimPixIn)
+  residualNii <- oro.nifti::nifti(residuals, datatype=dataTypeIn, pixdim=dimPixIn)
   rm(residuals)
   gc()
   

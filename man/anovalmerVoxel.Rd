@@ -2,7 +2,7 @@
 % Please edit documentation in R/anovalmerVoxel.R
 \name{anovalmerVoxel}
 \alias{anovalmerVoxel}
-\title{Computes analysis of variance tables for linear mixed effect model fits on all voxels of a NIfTI image within a mask.}
+\title{Computes voxelwise analysis of variance (ANOVA) tables for a Linear Mixed Effects Model.}
 \usage{
 anovalmerVoxel(image, mask, fourdOut = NULL, formula, subjData,
   ddf = "Satterthwaite", type = 3, mc.preschedule = TRUE, ncores = 1,
@@ -30,12 +30,12 @@ anovalmerVoxel(image, mask, fourdOut = NULL, formula, subjData,
 \item{...}{Additional arguments passed to lmer()}
 }
 \value{
-returns list of models fitted to each voxel over the masked images passed to function.
+Returns list of models fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function is able to run a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
-The analysis will run in all voxels in in the mask and will return analysis of variance tables at each voxel.
-The function relies on lmerTest to create p-values using the Satterthwaite Approximation. Multi-model calls are disabled.
+This function computes analysis of variance tables for the fitted models after running a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
+The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
+Please check the lmerTest documentation for further information about specific arguments used in lmerTest::anova(). Multi-model calls are disabled.
 }
 \examples{
 
