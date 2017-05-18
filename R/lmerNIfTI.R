@@ -50,7 +50,7 @@ lmerNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData,
   
   if (residual) {
     
-    models <- rlmerParam(image, mask , fourdOut = fourdOut, 
+    models <- rlmerParam(image, mask, fourdOut = fourdOut, 
                          formula = formula, subjData = subjData, 
                          mc.preschedule = mc.preschedule, ncores = ncores, ...)
     
