@@ -25,7 +25,7 @@
 #' fm1 <- "~ x + y"
 #' models <- rlmParam(image=image, mask=mask, 
 #'               formula=fm1, subjData=covs, ncores = 1)
-#' Maps <- rparMap(models, mask, method="fdr")
+#' Maps <- rparMap(models, image, mask, method="fdr", ncores = 1, mc.preschedule=TRUE)
 
 
 

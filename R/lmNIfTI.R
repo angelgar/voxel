@@ -14,6 +14,7 @@
 #' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
 #' @param ncores Number of cores to use
 #' @param method which method of correction for multiple comparisons (default is none)
+#' @param residual If set to TRUE then residuals maps will be returned along parametric maps
 #' @param outDir Path to the folder where to output parametric maps (Default is Null, only change if you want to write maps out)
 #' @param ... Additional arguments passed to lm()
 #' 
@@ -29,7 +30,9 @@
 #' Maps <- lmNIfTI(image=image, mask=mask, 
 #'               formula=fm1, subjData=covs, ncores = 1, method="fdr")
 
-lmNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, method="none", outDir = NULL, ...) {
+lmNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData, 
+                    mc.preschedule = TRUE, ncores = 1, method="none", 
+                    residual=FALSE, outDir = NULL, ...) {
   
   if (missing(image)) { stop("image is missing")}
   if (missing(mask)) { stop("mask is missing")}
@@ -38,12 +41,27 @@ lmNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData, mc.presche
   
   if (class(formula) != "character") { stop("formula class must be character")}
   
-  models <- vlmParam(image, mask , fourdOut = fourdOut, 
-                      formula = formula, subjData = subjData, 
-                      mc.preschedule = mc.preschedule, ncores = ncores, ...)
+  if (residual) {
+    
+    models <- rlmParam(image, mask , fourdOut = fourdOut, 
+                       formula = formula, subjData = subjData, 
+                       mc.preschedule = mc.preschedule, ncores = ncores, ...)
+    
+    print("Creating residual and parametric maps")
+    return(rparMap(parameters = models, image = image, mask = mask, 
+                   method = method, 
+                   ncores = ncores, mc.preschedule = mc.preschedule, 
+                   outDir = outDir))
+    
+  } else {
+    
+    models <- vlmParam(image, mask , fourdOut = fourdOut, 
+                       formula = formula, subjData = subjData, 
+                       mc.preschedule = mc.preschedule, ncores = ncores, ...)
+    
+    print("Creating parametric maps")
+    return(parMap(parameters = models, mask = mask, method=method, outDir = outDir))
+  }
   
-  print("Creating parametric maps")
-  
-  return(parMap(parameters = models, mask = mask, method=method, outDir = outDir))
   
 }
