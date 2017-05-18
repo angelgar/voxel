@@ -1,4 +1,4 @@
-#' Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables
+#' Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables
 #'  
 #'
 #' This function is able to run a Linear Mixed Effect Model using the lmer() function. 

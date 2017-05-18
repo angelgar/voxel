@@ -1,4 +1,4 @@
-#' Run a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables
+#' Run a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image and return parametric and smooth coefficients
 #' 
 #' This function is able to run a Generalized Mixed Effects Model (GAMM) using the gamm4() function. 
 #' The analysis will run in all voxels in in the mask and will return parametric and smooth coefficients.
