@@ -3,7 +3,7 @@
 ## Test environments
 * local OS X install, R 3.3.1
 * win-builder (devel and release)
-* ubuntu 12.04 on travis-ci, (oldrel, release and devel)
+* ubuntu 12.04 on travis-ci, (devel)
 
 ## R CMD check results
 
