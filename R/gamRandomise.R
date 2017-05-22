@@ -7,7 +7,7 @@
 #' 
 #' 
 #' @param image Input path of 'nifti' image or vector of path(s) to images. If multiple paths, the script will all mergeNiftis() and merge across time.
-#' @param Path to mask. Must be a binary mask
+#' @param maskPath to mask. Must be a binary mask
 #' @param formulaFull Must be the formula of the full model (i.e. "~s(age,k=5)+sex+mprage_antsCT_vol_TBV")
 #' @param formulaRed Must be the formula of the reduced model (i.e. "~sex+mprage_antsCT_vol_TBV")
 #' @param subjData Dataframe containing all the covariates used for the analysis
@@ -20,8 +20,6 @@
 #' @export
 #' 
 #' 
-#' 
-#' @examples
 #' 
 
 
@@ -49,10 +47,10 @@ gamRandomise <- function(image, maskPath = NULL, formulaFull, formulaRed,
   
   rm(image)
   
-  subjData$dummy <- rnorm(dim(subjData)[1])
+  subjData$dummy <- stats::rnorm(dim(subjData)[1])
   # model matrices
-  X = model.matrix(gam(update.formula(formulaFull, "dummy ~ .") , data=subjData))
-  Xred = model.matrix(gam(update.formula(formulaRed, "dummy ~ .") , data=subjData))
+  X = mgcv::model.matrix.gam(mgcv::gam(stats::update.formula(formulaFull, "dummy ~ .") , data=subjData))
+  Xred = mgcv::model.matrix.gam(mgcv::gam(stats::update.formula(formulaRed, "dummy ~ .") , data=subjData))
   
   ## DESIGN AND CONTRASTS ##
   # design file
@@ -61,29 +59,29 @@ gamRandomise <- function(image, maskPath = NULL, formulaFull, formulaRed,
   p2 = p - ncol(Xred)
   matfile = file.path(outDir, 'design.mat')
   cat('/NumWaves\t', ncol(X), '\n/NumPoints\t', nrow(X), '\n/PPheights\t', paste(apply(X, 2, function(x) abs(diff(range(x))) ), collapse='\t'), '\n\n/Matrix\n', sep='', file=matfile)
-  write.table(X, append=TRUE, file=matfile, row.names=FALSE, col.names=FALSE)
+  utils::write.table(X, append=TRUE, file=matfile, row.names=FALSE, col.names=FALSE)
   
   # contrast file
   confile1 = file.path(outDir, 'design.con') # for f-test
   cons = matrix(0, nrow=p2, ncol=ncol(X))
   cons[ cbind(1:(p2), which(! colnames(X) %in% colnames(Xred) ) ) ] = 1
   cat('/ContrastName1\t temp\n/ContrastName2\t\n/NumWaves\t', ncol(X), '\n/NumPoints\t', nrow(cons), '\n/PPheights\t', paste(rep(1,ncol(cons)), collapse='\t'), '\n/RequiredEffect\t1\t1\n\n/Matrix\n', sep='', file=confile1)
-  write.table(cons, append=TRUE, file=confile1, row.names=FALSE, col.names=FALSE)
+  utils::write.table(cons, append=TRUE, file=confile1, row.names=FALSE, col.names=FALSE)
   
   # fts file
   ftsfile = file.path(outDir, 'design.fts')
   fts = matrix(1, nrow=1, ncol=nrow(cons)) # ftest of all contrasts
   cat('/NumWaves\t', nrow(cons), '\n/NumContrasts\t', 1, '\n\n/Matrix\n', sep='', file=ftsfile)
-  write.table(fts, append=TRUE, file=ftsfile, row.names=FALSE, col.names=FALSE)
+  utils::write.table(fts, append=TRUE, file=ftsfile, row.names=FALSE, col.names=FALSE)
   
   # t distribution is two tailed, F is one tailed. -x outputs voxelwise statistics -N outputs null distribution text files
   # F-test
   
   ##Change mergenifti
   if(!is.null(maskPath)){
-    fcmd = paste('randomise -i', mergednifti, '-m', maskPath, '-o', file.path(outDir, 'randomise'), '-d', matfile, '-t', confile1, '-f', ftsfile, '--fonly -F', qf( (1-thresh),df1=p2, df2=(n-p) ), '-x -N -n', nsim, '--uncorrp' )
+    fcmd = paste('randomise -i', mergednifti, '-m', maskPath, '-o', file.path(outDir, 'randomise'), '-d', matfile, '-t', confile1, '-f', ftsfile, '--fonly -F', stats::qf( (1-thresh),df1=p2, df2=(n-p) ), '-x -N -n', nsim, '--uncorrp' )
   } else {
-    fcmd = paste('randomise -i', mergednifti, '-o', file.path(outDir, 'randomise'), '-d', matfile, '-t', confile1, '-f', ftsfile, '--fonly -F', qf( (1-thresh),df1=p2, df2=(n-p) ), '-x -N -n', nsim, '--uncorrp' )
+    fcmd = paste('randomise -i', mergednifti, '-o', file.path(outDir, 'randomise'), '-d', matfile, '-t', confile1, '-f', ftsfile, '--fonly -F', stats::qf( (1-thresh),df1=p2, df2=(n-p) ), '-x -N -n', nsim, '--uncorrp' )
   }
   
   if(run){
