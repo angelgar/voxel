@@ -49,7 +49,7 @@ vgamm4Param <- function(image, mask , fourdOut = NULL, formula, randomFormula, s
   if (class(image) == "character" & length(image) == 1) {
     image <- oro.nifti::readNIfTI(fname=image)
   } else if (class(image) == "character" & length(image) > 1) {
-    image <- mergeNiftis(inputPaths = image, direction = "t", outfile <- fourdOut)
+    image <- mergeNiftis(inputPaths = image, direction = "t", outfile = fourdOut)
   }
   
   if (class(mask) == "character" & length(mask) == 1) {
