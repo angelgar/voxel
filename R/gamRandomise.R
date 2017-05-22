@@ -1,21 +1,22 @@
 #' Generate FSL Randomise call for a GAM Model
 #'  
 #'
-#' This function is able to generate all the necessary documentation to run randomise with a GAM Model
-#' This script will write out all design
-#' The function relies on lmerTest to create p-values using the Satterthwaite Approximation.
+#' This function is able to generate all the necessary files to run randomise with a GAM Model
+#' This script will write out all design and contrast files 
+#' This function will run a f-test to compare a full and reduced model (a model with and withotu spline)
 #' 
 #' 
-#' @param image Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.
-#' @param mask Input mask of type 'nifti' or path to mask. Must be a binary mask
-#' @param fourdOut To be passed to mergeNifti, This is the path and file name without the suffix to save the fourd file. Default (NULL) means script won't write out 4D image.
-#' @param formula Must be a formula passed to lmer()
+#' @param image Input path of 'nifti' image or vector of path(s) to images. If multiple paths, the script will all mergeNiftis() and merge across time.
+#' @param Path to mask. Must be a binary mask
+#' @param formulaFull Must be the formula of the full model (i.e. "~s(age,k=5)+sex+mprage_antsCT_vol_TBV")
+#' @param formulaRed Must be the formula of the reduced model (i.e. "~sex+mprage_antsCT_vol_TBV")
 #' @param subjData Dataframe containing all the covariates used for the analysis
-#' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
-#' @param ncores Number of cores to use
-#' @param ... Additional arguments passed to lmer()
+#' @param outDir output directory for randomise 
+#' @param nsim Number of simulations
+#' @param thresh significance threshold
+#' @param run FALSE will only print randomise command but won't it
 #' 
-#' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
+#' @return Return randomise command 
 #' @export
 #' 
 #' 
@@ -88,5 +89,7 @@ gamRandomise <- function(image, maskPath = NULL, formulaFull, formulaRed,
   if(run){
     system(fcmd)
   }
+  
+  print(fcmd)
   
 }
