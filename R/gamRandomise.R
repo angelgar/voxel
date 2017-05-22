@@ -19,7 +19,20 @@
 #' @return Return randomise command 
 #' @export
 #' 
+#' @examples
+#' \dontrun{
 #' 
+#' subjData = mgcv::gamSim(1,n=400,dist="normal",scale=2)
+#' OutDirRoot="Output Directory"
+#' maskName="Path to mask"
+#' imagePath="Path to output"
+#' covsFormula="~s(age,k=5)+sex+mprage_antsCT_vol_TBV"
+#' redFormula="~sex+mprage_antsCT_vol_TBV"
+#' 
+#' gamRandomise(image = imagePath, maskPath = maskName, formulaFull = covsFormula, 
+#'            formulaRed = redFormula, subjData = subjData, outDir = OutDirRoot)
+#' 
+#' }
 #' 
 
 
