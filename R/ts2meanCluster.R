@@ -1,7 +1,7 @@
 #' Timeseries to Mean Cluster 
 #'
 #' This function is able to output the mean voxel intensity over a cluster. 
-#' Each column represents a cluster and the rows represent the t-dimention.
+#' Each column represents a cluster and the rows represent the t-dimension.
 #' @param image Input image of type 'nifti'
 #' @param mask Input mask of type 'nifti'. Must have different clusters labeled as integers.
 #' @keywords internal

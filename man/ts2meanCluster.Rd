@@ -13,7 +13,7 @@ ts2meanCluster(image, mask)
 }
 \description{
 This function is able to output the mean voxel intensity over a cluster. 
-Each column represents a cluster and the rows represent the t-dimention.
+Each column represents a cluster and the rows represent the t-dimension.
 }
 \examples{
 

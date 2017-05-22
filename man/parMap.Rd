@@ -7,7 +7,7 @@
 parMap(parameters, mask, method = "none", outDir = NULL)
 }
 \arguments{
-\item{parameters}{list of parametric and smooth table coefficents or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)}
+\item{parameters}{list of parametric and smooth table coefficients or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)}
 
 \item{mask}{Input mask of type 'nifti' or path to one. Must be a binary mask or a character. Must match the mask passed to one of vlmParam, vgamParam, vgamm4Param, vlmerParam}
 
@@ -21,7 +21,7 @@ Return parametric maps of the fitted models
 \description{
 This function create parametric maps according from model parametric tables or analysis of variance tables. 
 The function will return a p-map, t-map, signed z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms. 
-Additionally the function will return a p-map, F-map, p-toz-map, and p-adjusted-map if the input is ANOVA.
+Additionally the function will return a p-map, F-map, p-to-z-map, and p-adjusted-map if the input is ANOVA.
 You can select which type of p-value correction you want done on the map. The z-maps are signed just like FSL.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lmerNIfTI.R
 \name{lmerNIfTI}
 \alias{lmerNIfTI}
-\title{Run a Linear Mixed Effet Model on a NIfTI image and output a parametric maps}
+\title{Run a Linear Mixed Effects Model on a NIfTI image and output a parametric maps}
 \usage{
 lmerNIfTI(image, mask, fourdOut = NULL, formula, subjData,
   mc.preschedule = TRUE, ncores = 1, method = "none", residual = FALSE,

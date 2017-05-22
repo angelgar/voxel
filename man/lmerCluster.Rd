@@ -2,7 +2,7 @@
 % Please edit documentation in R/lmerCluster.R
 \name{lmerCluster}
 \alias{lmerCluster}
-\title{Run a Linear Mixed Effet Model on the mean intensity over a region of interest}
+\title{Run a Linear Mixed Effects Model on the mean intensity over a region of interest}
 \usage{
 lmerCluster(image, mask, fourdOut = NULL, formula, subjData,
   mc.preschedule = TRUE, ncores = 1, ...)

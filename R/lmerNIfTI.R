@@ -1,4 +1,4 @@
-#' Run a Linear Mixed Effet Model on a NIfTI image and output a parametric maps   
+#' Run a Linear Mixed Effects Model on a NIfTI image and output a parametric maps   
 #'
 #' This function is able to run a Linear Mixed Effect Model using the lmer() function. 
 #' The function relies on lmerTest to create p-values using the Satterthwaite Approximation.

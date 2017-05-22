@@ -2,7 +2,7 @@
 % Please edit documentation in R/lmerVoxel.R
 \name{lmerVoxel}
 \alias{lmerVoxel}
-\title{Run a Linear Mixed Effet Model on all voxels of a NIfTI image within a mask.}
+\title{Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask.}
 \usage{
 lmerVoxel(image, mask, fourdOut = NULL, formula = NULL, subjData,
   mc.preschedule = TRUE, ncores = 1, ...)

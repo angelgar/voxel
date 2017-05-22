@@ -8,7 +8,7 @@ rparMap(parameters, image, mask, method, ncores, mc.preschedule,
   outDir = NULL)
 }
 \arguments{
-\item{parameters}{list of parametric and smooth table coefficents or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)}
+\item{parameters}{list of parametric and smooth table coefficients or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)}
 
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}
 
@@ -28,7 +28,7 @@ Return parametric maps of the fitted models
 \description{
 This function create parametric maps according from model parametric tables or analysis of variance tables. 
 The function will return a p-map, t-map, signed z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms. 
-Additionally the function will return a p-map, F-map, p-toz-map, and p-adjusted-map if the input is ANOVA.
+Additionally the function will return a p-map, F-map, p-to-z-map, and p-adjusted-map if the input is ANOVA.
 This function will return a residual map that can be used for cluster correction
 You can select which type of p-value correction you want done on the map. The z-maps are signed just like FSL.
 }

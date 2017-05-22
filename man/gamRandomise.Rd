@@ -32,7 +32,7 @@ Return randomise command
 \description{
 This function is able to generate all the necessary files to run randomise with a GAM Model
 This script will write out all design and contrast files 
-This function will run a f-test to compare a full and reduced model (a model with and withotu spline)
+This function will run a f-test to compare a full and reduced model (a model with and without spline)
 }
 \examples{
 \dontrun{

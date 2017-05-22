@@ -16,7 +16,7 @@ gammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
 
 \item{formula}{Must be a formula passed to gamm4()}
 
-\item{randomFormula}{Random effects formual passed to gamm4()}
+\item{randomFormula}{Random effects formula passed to gamm4()}
 
 \item{subjData}{Dataframe containing all the covariates used for the analysis}
 

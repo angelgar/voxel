@@ -3,7 +3,7 @@
 #'
 #' This function is able to generate all the necessary files to run randomise with a GAM Model
 #' This script will write out all design and contrast files 
-#' This function will run a f-test to compare a full and reduced model (a model with and withotu spline)
+#' This function will run a f-test to compare a full and reduced model (a model with and without spline)
 #' 
 #' 
 #' @param image Input path of 'nifti' image or vector of path(s) to images. If multiple paths, the script will all mergeNiftis() and merge across time.

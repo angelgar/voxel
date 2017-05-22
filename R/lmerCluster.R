@@ -1,4 +1,4 @@
-#' Run a Linear Mixed Effet Model on the mean intensity over a region of interest 
+#' Run a Linear Mixed Effects Model on the mean intensity over a region of interest 
 #'
 #' This function is able to run a LME using the lmer() function. 
 #' All clusters or region of interest must be labeled with integers in the mask passed as an argument.

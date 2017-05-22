@@ -10,7 +10,7 @@
 #' @param mask Input mask of type 'nifti' or path to mask. Must be a binary mask
 #' @param fourdOut To be passed to mergeNifti, This is the path and file name without the suffix to save the fourd file. Default (NULL) means script won't write out 4D image.
 #' @param formula Must be a formula passed to gamm4()
-#' @param randomFormula Random effects formual passed to gamm4()
+#' @param randomFormula Random effects formula passed to gamm4()
 #' @param subjData Dataframe containing all the covariates used for the analysis
 #' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
 #' @param ncores Number of cores to use

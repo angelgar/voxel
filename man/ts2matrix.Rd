@@ -12,8 +12,8 @@ ts2matrix(image, mask)
 \item{mask}{Input mask of type 'nifti'. Must be a binary mask}
 }
 \description{
-This function is able to mask a 4-Dimentional image and create a matrix from it. 
-Each column represents the same voxel in the xyz array while the rows represent the t-dimention.
+This function is able to mask a 4-Dimensional image and create a matrix from it. 
+Each column represents the same voxel in the xyz array while the rows represent the t-dimension.
 }
 \examples{
 
