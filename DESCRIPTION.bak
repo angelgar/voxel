@@ -21,7 +21,3 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Imports: parallel,stats,mgcv,gamm4,oro.nifti,lmerTest,ggplot2
-Suggests: 
-    covr
-Remotes: neuroconductor/oro.nifti@c25f6bcb1200506a3e39127f550bcca7766b0107
-biocViews: 

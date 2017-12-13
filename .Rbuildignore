@@ -4,3 +4,6 @@
 ^cran-comments\.md$
 ^README\.md$
 ^NEWS\.md$
+^DESCRIPTION\.bak$
+^\./\.travis\.yml\.bak$
+^appveyor\.yml$
