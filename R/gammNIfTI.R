@@ -10,11 +10,12 @@
 #' @param mask Input mask of type 'nifti' or path to mask. Must be a binary mask
 #' @param fourdOut To be passed to mergeNifti, This is the path and file name without the suffix to save the fourd file. Default (NULL) means script won't write out 4D image.
 #' @param formula Must be a formula passed to gamm4()
-#' @param randomFormula Random effects formual passed to gamm4()
+#' @param randomFormula Random effects formula passed to gamm4()
 #' @param subjData Dataframe containing all the covariates used for the analysis
 #' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
 #' @param ncores Number of cores to use
 #' @param method which method of correction for multiple comparisons (default is none)
+#' @param residual If set to TRUE then residuals maps will be returned along parametric maps
 #' @param outDir Path to the folder where to output parametric maps (Default is Null, only change if you want to write maps out)
 #' @param ... Additional arguments passed to gamm4()
 #' 
@@ -29,7 +30,7 @@
 #' covs <- data.frame(x = runif(25), y = runif(25), id = rep(1:5,5))
 #' fm1 <- "~ s(x) + s(y)"
 #' randomFormula <- "~(1|id)"
-#' models <- gammNIfTI(image, mask, formula = fm1, 
+#' Maps <- gammNIfTI(image, mask, formula = fm1, 
 #'                  randomFormula = randomFormula, subjData = covs, ncores = 1,
 #'                  method="fdr", REML=TRUE)
 #' 
@@ -38,7 +39,7 @@
 
 gammNIfTI <- function (image, mask, fourdOut = NULL, formula, randomFormula, 
                        subjData, mc.preschedule = TRUE, ncores = 1, method = "none", 
-                       outDir = NULL, ...) {
+                       residual=FALSE, outDir = NULL, ...) {
   if (missing(image)) {
     stop("image is missing")
   }
@@ -60,10 +61,31 @@ gammNIfTI <- function (image, mask, fourdOut = NULL, formula, randomFormula,
   if (class(randomFormula) != "character") {
     stop("randomFormula class must be character")
   }
-  models <- vgamm4Param(image, mask, fourdOut = fourdOut, formula = formula, 
-                      randomFormula = randomFormula, subjData = subjData, mc.preschedule = mc.preschedule, 
-                      ncores = ncores, ...)
-  print("Creating parametric maps")
-  return(parMap(parameters = models, mask = mask, method = method, 
-                outDir = outDir))
+  
+  if (residual) {
+    
+    models <- rgamm4Param(image, mask, fourdOut = fourdOut, formula = formula, 
+                          randomFormula = randomFormula, subjData = subjData, 
+                          mc.preschedule = mc.preschedule, 
+                          ncores = ncores, ...)
+    
+    print("Creating residual and parametric maps")
+    return(rparMap(parameters = models, image = image, mask = mask, 
+                   method = method, 
+                   ncores = ncores, mc.preschedule = mc.preschedule, 
+                   outDir = outDir))
+    
+  } else {
+    
+    models <- vgamm4Param(image, mask, fourdOut = fourdOut, formula = formula, 
+                          randomFormula = randomFormula, subjData = subjData, 
+                          mc.preschedule = mc.preschedule, 
+                          ncores = ncores, ...)
+    
+    print("Creating parametric maps")
+    return(parMap(parameters = models, mask = mask, method = method, 
+                  outDir = outDir))
+  }
+  
+  
 }

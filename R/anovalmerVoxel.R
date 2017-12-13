@@ -1,8 +1,9 @@
-#' Computes analysis of variance tables for linear mixed effect model fits on all voxels of a NIfTI image within a mask.
+#' Computes voxelwise analysis of variance (ANOVA) tables for a Linear Mixed Effects Model. 
 #'
-#' This function is able to run a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
-#' The analysis will run in all voxels in in the mask and will return analysis of variance tables at each voxel.
-#' The function relies on lmerTest to create p-values using the Satterthwaite Approximation. Multi-model calls are disabled.
+#' This function computes analysis of variance tables for the fitted models after running a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
+#' The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
+#' Please check the lmerTest documentation for further information about specific arguments used in lmerTest::anova(). Multi-model calls are disabled.
+#'
 #' 
 #' 
 #' @param image Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.
@@ -16,7 +17,7 @@
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to lmer()
 #' 
-#' @return returns list of models fitted to each voxel over the masked images passed to function.
+#' @return Returns list of models fitted to each voxel over the masked images passed to function.
 #' @export
 #' 
 #' 

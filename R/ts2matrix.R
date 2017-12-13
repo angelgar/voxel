@@ -1,9 +1,10 @@
 #' Timeseries to Matrix 
 #'
-#' This function is able to mask a 4-Dimentional image and create a matrix from it. 
-#' Each column represents the same voxel in the xyz array while the rows represent the t-dimention.
+#' This function is able to mask a 4-Dimensional image and create a matrix from it. 
+#' Each column represents the same voxel in the xyz array while the rows represent the t-dimension.
 #' @param image Input image of type 'nifti'
 #' @param mask Input mask of type 'nifti'. Must be a binary mask
+#' @keywords internal
 #' @export
 #' @examples
 #' 

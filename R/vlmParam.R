@@ -14,7 +14,7 @@
 #' @param ... Additional arguments passed to lm()
 #'
 #' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
-#'
+#' @keywords internal
 #' @export
 #' @examples
 #' image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
@@ -40,7 +40,7 @@ vlmParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.presch
   if (class(image) == "character" & length(image) == 1) {
     image <- oro.nifti::readNIfTI(fname=image)
   } else if (class(image) == "character" & length(image) > 1) {
-    image <- mergeNiftis(inputPaths = image, direction = "t", outfile <- fourdOut)
+    image <- mergeNiftis(inputPaths = image, direction = "t", outfile = fourdOut)
   }
 
   if (class(mask) == "character" & length(mask) == 1) {

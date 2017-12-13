@@ -1,7 +1,7 @@
 #' GAMM plotting using ggplot2
 #'  
 #' @family Plotting
-#' @param gammFit fitted gam model as produced by mgcv::gam()
+#' @param gammFit fitted gam model as produced by gamm4::gamm()
 #' @param smooth.cov (character) name of smooth term to be plotted
 #' @param groupCovs (character)  name of group variable to plot by, if NULL (default) then there are no groups in plot
 #' @param orderedAsFactor if TRUE (default) then the model is refitted with ordered variables as factors.

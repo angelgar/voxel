@@ -8,6 +8,7 @@
 #' @param ncores Number of cores to be used for this operation
 #' @param ... Additional arguments passed to readNIfTI
 #' @return Returns a merged NIfTI image
+#' @keywords internal
 #' @export
 
 

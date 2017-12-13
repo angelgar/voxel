@@ -1,8 +1,8 @@
-#' Computes analysis of variance tables for a generalized Additive Model on all voxels of a NIfTI image within a mask.
+#' Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Model.
 #'
 #' This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam).
 #' The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-#' Please check anova::gam to learn more about the function of the arguments that are passed to anova.gam. Multi-model calls are disabled.
+#' Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled.
 #'
 #' @param image Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.
 #' @param mask Input mask of type 'nifti' or path to mask. Must be a binary mask
@@ -16,7 +16,7 @@
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to gam()
 #'
-#' @return List of models fitted to each voxel over the masked images passed to function.
+#' @return Returns list of models fitted to each voxel over the masked images passed to function.
 #'
 #' @export
 #' @examples

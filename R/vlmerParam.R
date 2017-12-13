@@ -15,6 +15,7 @@
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to lmer()
 #'
+#' @keywords internal
 #' @return Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
 #' @export
 #'
@@ -44,7 +45,7 @@ vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   if (class(image) == "character" & length(image) == 1) {
     image <- oro.nifti::readNIfTI(fname=image)
   } else if (class(image) == "character" & length(image) > 1) {
-    image <- mergeNiftis(inputPaths = image, direction = "t", outfile <- fourdOut)
+    image <- mergeNiftis(inputPaths = image, direction = "t", outfile = fourdOut)
   }
 
   if (class(mask) == "character" & length(mask) == 1) {

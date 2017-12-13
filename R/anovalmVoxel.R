@@ -1,7 +1,8 @@
-#' Computes analysis of variance tables for linear model fits on all voxels of a NIfTI image within a mask.
+#' Computes voxelwise analysis of variance (ANOVA) tables for a Linear Model. 
 #'
-#' This function computes analysis of variance tables for the fitted models after running a linear model.
-#' The analysis will run in all voxels in in the mask and will return the ANOVA tabel for each voxel. Multi-model calls are disabled.
+#' This function computes analysis of variance tables for the fitted models after running a Linear Model using the stats::lm() function.
+#' The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
+#' Please check the lmerTest documentation for further information about specific arguments used in stats::anova.lm(). Multi-model calls are disabled.
 #' 
 #' @param image Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.
 #' @param mask Input mask of type 'nifti' or path to mask. Must be a binary mask

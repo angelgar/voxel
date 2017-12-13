@@ -2,10 +2,10 @@
 #'
 #' This function create parametric maps according from model parametric tables or analysis of variance tables. 
 #' The function will return a p-map, t-map, signed z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms. 
-#' Additionally the function will return a p-map, F-map, p-toz-map, and p-adjusted-map if the input is ANOVA.
+#' Additionally the function will return a p-map, F-map, p-to-z-map, and p-adjusted-map if the input is ANOVA.
 #' You can select which type of p-value correction you want done on the map. The z-maps are signed just like FSL.
 #' 
-#' @param parameters list of parametric and smooth table coefficents or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)
+#' @param parameters list of parametric and smooth table coefficients or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)
 #' @param mask Input mask of type 'nifti' or path to one. Must be a binary mask or a character. Must match the mask passed to one of vlmParam, vgamParam, vgamm4Param, vlmerParam
 #' @param method which method of correction for multiple comparisons (default is none)
 #' @param outDir Path to the folder where to output parametric maps (Default is Null, only change if you want to write maps out)
@@ -263,43 +263,42 @@ parMap <- function(parameters, mask, method="none", outDir = NULL) {
           names(ParameterMaps) <- c(tempNames, paste0(var,"_pMap"), paste0(var,"_tMap"), paste0(var, "_zMap"), paste0(var, "_multipleComp_pAdjusted_",method,"_Map"))
         }
       }
-    }
-    
-    if (!is.null(dim(parameters[[1]][[2]]))) {
-      for (j in 1:dim(parameters[[1]][[2]])[1]) {
-        
-        pOut<-matrix(NA,nrow=length(parameters),ncol=1)
-        zOut<-matrix(NA,nrow=length(parameters),ncol=1)
-        
-        variable <- rownames(parameters[[1]][[2]])[j]
-        pvalIndex <- which(colnames(parameters[[1]][[2]]) == "p-value")
-        
-        for(i in 1:length(parameters)){
-          pOut[i,1]<- parameters[[i]][[2]][which(rownames(parameters[[i]][[2]]) == variable),pvalIndex]
-          zOut[i,1]<- stats::qnorm(parameters[[i]][[2]][which(rownames(parameters[[i]][[2]]) == variable),pvalIndex] / 2, lower.tail=F)
+      
+      if (!is.null(dim(parameters[[1]][[2]]))) {
+        for (j in 1:dim(parameters[[1]][[2]])[1]) {
+          
+          pOut<-matrix(NA,nrow=length(parameters),ncol=1)
+          zOut<-matrix(NA,nrow=length(parameters),ncol=1)
+          
+          variable <- rownames(parameters[[1]][[2]])[j]
+          pvalIndex <- which(colnames(parameters[[1]][[2]]) == "p-value")
+          
+          for(i in 1:length(parameters)){
+            pOut[i,1]<- parameters[[i]][[2]][which(rownames(parameters[[i]][[2]]) == variable),pvalIndex]
+            zOut[i,1]<- stats::qnorm(parameters[[i]][[2]][which(rownames(parameters[[i]][[2]]) == variable),pvalIndex] / 2, lower.tail=F)
+          }
+          
+          pOutImage<-mask
+          pOutImage@.Data[mask@.Data==1]<-pOut
+          
+          zOutImage<-mask
+          zOutImage@.Data[mask@.Data==1]<-zOut
+          
+          pAdjustedOutImage<-mask
+          pAdjustedOut <- stats::p.adjust(pOut, method=method)
+          pAdjustedOutImage@.Data[mask==1@.Data]<-pAdjustedOut
+          
+          var <- gsub("\\(", "", variable)
+          var <- gsub("\\)", "", var)
+          var <- gsub(",", "", var)
+          var <- gsub("=", "", var)
+          
+          tempNames <- names(ParameterMaps)
+          ParameterMaps <- c(ParameterMaps, list(pOutImage), list(zOutImage), list(pAdjustedOutImage))
+          names(ParameterMaps) <- c(tempNames, paste0(var,"_pMap"), paste0(var, "_zMap"), paste0(var, "_multipleComp_pAdjusted_",method,"_Map"))
         }
-        
-        pOutImage<-mask
-        pOutImage@.Data[mask@.Data==1]<-pOut
-        
-        zOutImage<-mask
-        zOutImage@.Data[mask@.Data==1]<-zOut
-        
-        pAdjustedOutImage<-mask
-        pAdjustedOut <- stats::p.adjust(pOut, method=method)
-        pAdjustedOutImage@.Data[mask==1@.Data]<-pAdjustedOut
-        
-        var <- gsub("\\(", "", variable)
-        var <- gsub("\\)", "", var)
-        var <- gsub(",", "", var)
-        var <- gsub("=", "", var)
-        
-        tempNames <- names(ParameterMaps)
-        ParameterMaps <- c(ParameterMaps, list(pOutImage), list(zOutImage), list(pAdjustedOutImage))
-        names(ParameterMaps) <- c(tempNames, paste0(var,"_pMap"), paste0(var, "_zMap"), paste0(var, "_multipleComp_pAdjusted_",method,"_Map"))
       }
     }
-  
   } 
   
   if (length(colnames(parameters[[1]])) == 4) {
