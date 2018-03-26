@@ -28,7 +28,7 @@ lmerCluster(image, mask, fourdOut = NULL, formula, subjData,
 Returns list of models fitted to the mean voxel intensity a region or interest.
 }
 \description{
-This function is able to run a LME using the lmer() function. 
+This function is able to run a LME using the lmer() function.
 All clusters or region of interest must be labeled with integers in the mask passed as an argument.
 The function relies on lmerTest to create p-values using the Satterthwaite Approximation.
 }
