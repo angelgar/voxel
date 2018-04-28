@@ -19,9 +19,9 @@ anovalmerVoxel(image, mask, fourdOut = NULL, formula, subjData,
 
 \item{subjData}{Dataframe containing all the covariates used for the analysis}
 
-\item{ddf}{Which approximation of DDF to be used. To be passed to anova.merModLmerTest. Defaults to "Satterthwaite"}
+\item{ddf}{Which approximation of DDF to be used. To be passed to anova.lmerModLmerTest. Defaults to "Satterthwaite"}
 
-\item{type}{Type of hypothesis to be test (defined from SAS theory). Defaults to 3. To be passed to anova.merModLmerTest}
+\item{type}{Type of hypothesis to be test (defined from SAS terminology). Defaults to 3. To be passed to anova.lmerModLmerTest}
 
 \item{mc.preschedule}{Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply}
 
@@ -35,7 +35,7 @@ Returns list of models fitted to each voxel over the masked images passed to fun
 \description{
 This function computes analysis of variance tables for the fitted models after running a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
 The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-Please check the lmerTest documentation for further information about specific arguments used in lmerTest::anova(). Multi-model calls are disabled.
+Please check the lmerTest documentation for further information about specific arguments used in anova.lmerModLmerTest. Multi-model calls are disabled.
 }
 \examples{
 

@@ -2,7 +2,7 @@
 #'
 #' This function computes analysis of variance tables for the fitted models after running a Linear Mixed Effect Model using the lmerTest() function and the anova function in that package.
 #' The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-#' Please check the lmerTest documentation for further information about specific arguments used in lmerTest::anova(). Multi-model calls are disabled.
+#' Please check the lmerTest documentation for further information about specific arguments used in anova.lmerModLmerTest. Multi-model calls are disabled.
 #'
 #'
 #'
@@ -11,8 +11,8 @@
 #' @param fourdOut To be passed to mergeNifti, This is the path and file name without the suffix to save the fourd file. Default (NULL) means script won't write out 4D image.
 #' @param formula Must be a formula passed to lmer()
 #' @param subjData Dataframe containing all the covariates used for the analysis
-#' @param ddf Which approximation of DDF to be used. To be passed to anova.merModLmerTest. Defaults to "Satterthwaite"
-#' @param type Type of hypothesis to be test (defined from SAS theory). Defaults to 3. To be passed to anova.merModLmerTest
+#' @param ddf Which approximation of DDF to be used. To be passed to anova.lmerModLmerTest. Defaults to "Satterthwaite"
+#' @param type Type of hypothesis to be test (defined from SAS terminology). Defaults to 3. To be passed to anova.lmerModLmerTest
 #' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to lmer()
@@ -77,7 +77,6 @@ anovalmerVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, ddf
   print("Running test ANOVA")
 
   foo <- base::do.call(lmerTest::lmer, list(formula = m[[1]], data=imageMat, ...))
-  ## foo <- as.call(list(quote(lmerTest::lmer), formula=m[[1]], data=imageMat, ...))
   model <- anova(foo, ddf=ddf, type=type)
 
   print("Running parallel ANOVAs")

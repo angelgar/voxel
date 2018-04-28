@@ -30,7 +30,7 @@ Returns list of models fitted to each voxel over the masked images passed to fun
 \description{
 This function computes analysis of variance tables for the fitted models after running a Linear Model using the stats::lm() function.
 The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
-Please check the lmerTest documentation for further information about specific arguments used in stats::anova.lm(). Multi-model calls are disabled.
+Please check the stats documentation for further information about specific arguments used in stats::anova.lm(). Multi-model calls are disabled.
 }
 \examples{
 image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
@@ -38,6 +38,6 @@ mask <- oro.nifti::nifti(img = array(0:1, dim = c(4,4,4,1)))
 set.seed(1)
 covs <- data.frame(x = runif(25), y=runif(25))
 fm1 <- "~ x + y"
-models <- anovalmVoxel(image=image, mask=mask, 
+models <- anovalmVoxel(image=image, mask=mask,
               formula=fm1, subjData=covs, ncores = 1)
 }

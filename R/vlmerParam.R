@@ -74,7 +74,6 @@ vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   imageMat <- cbind(imageMat, subjData)
 
   print("Running test model")
-  # model <- lmerTest::lmer(m[[1]], data=imageMat, ...)
   foo <- base::do.call(lmerTest::lmer, list(formula = m[[1]], data=imageMat, ...))
 
   print("Running parallel models")

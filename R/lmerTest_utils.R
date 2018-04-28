@@ -44,31 +44,3 @@ is_lmerTest_class <- function(object)
     # Check if an object is of class merModLmerTest or lmerModLmerTest
     # Bridges across versions of lmerTest
     inherits(object, "merModLmerTest") || inherits(object, "lmerModLmerTest")
-
-
-# anova_lmerTest <- function(object, ...) {
-#     # Dispatch the right anova method across lmerTest versions
-#     if(is_lmerTest_class(object) && requireNamespace("lmerTest", quietly = TRUE)) {
-#         if(packageVersion("lmerTest") < "2.0.37.90012")
-#             return(lmerTest::anova(object, ...)) else return(anova(object, ...))
-#     } else if(inherits(object, "merMod") && requireNamespace("lmerTest", quietly = TRUE)) {
-#         if(packageVersion("lmerTest") < "2.0.37.90012")
-#             return(lmerTest::anova(as(object, "merModLmerTest"), ...)) else
-#                 return(anova(lmerTest::as_lmerModLmerTest(object), ...))
-#     } # Default:
-#     anova(object, ...)
-# }
-#
-# summary_lmerTest <- function(object, ...) {
-#     # Dispatch the right summary method across lmerTest versions
-#     if(is_lmerTest_class(object) && requireNamespace("lmerTest", quietly = TRUE)) {
-#         if(packageVersion("lmerTest") < "2.0.37.90012")
-#             return(lmerTest::summary(object, ...)) else return(summary(object, ...))
-#     } else if(inherits(object, "merMod") && requireNamespace("lmerTest", quietly = TRUE)) {
-#         if(packageVersion("lmerTest") < "2.0.37.90012")
-#             return(lmerTest::summary(as(object, "merModLmerTest"), ...)) else
-#                 return(summary(lmerTest::as_lmerModLmerTest(object), ...))
-#     } # Default:
-#     summary(object, ...)
-# }
-#
