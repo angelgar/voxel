@@ -5,8 +5,8 @@
 \title{Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Model.}
 \usage{
 anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
-  dispersion = NULL, freq = FALSE, p.type = 0, mc.preschedule = TRUE,
-  ncores = 1, ...)
+  dispersion = NULL, freq = FALSE, mc.preschedule = TRUE, ncores = 1,
+  ...)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}
@@ -23,8 +23,6 @@ anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
 
 \item{freq}{To be passed to mgcv::anova.gam, Defaults to FALSE. Frequentist or Bayesian approximations for p-values}
 
-\item{p.type}{To be passed to mgcv::anova.gam, Defaults to 0. Exact test statistics o use for smooth terms.}
-
 \item{mc.preschedule}{Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply}
 
 \item{ncores}{Number of cores to use}
@@ -35,16 +33,16 @@ anovagamVoxel(image, mask, fourdOut = NULL, formula, subjData,
 Returns list of models fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam). 
+This function computes analysis of variance tables for the fitted models after running a Generalized Additive Model (from mgcv::gam).
 The analysis will run in all voxels in the mask and will return the analysis of variance table for each voxel.
 Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled.
 }
 \examples{
-image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
-mask <- oro.nifti::nifti(img = array(0:1, dim = c(4,4,4,1)))
+image <- oro.nifti::nifti(img = array(1:200, dim =c(2,2,2,25)))
+mask <- oro.nifti::nifti(img = array(0:1, dim = c(2,2,2,1)))
 set.seed(1)
 covs <- data.frame(x = runif(25), y=runif(25))
 fm1 <- "~ s(x) + y"
-models <- anovagamVoxel(image=image, mask=mask, 
+models <- anovagamVoxel(image=image, mask=mask,
               formula=fm1, subjData=covs, ncores = 1)
 }
