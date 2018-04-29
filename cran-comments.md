@@ -1,4 +1,4 @@
-## Version 1.3.3
+## Version 1.3.4
 
 ## Test environments
 * local OS X install, R 3.3.1
@@ -10,13 +10,7 @@
 Status: OK
 
 R CMD check results
-0 errors | 0 warnings | 1 note 
-checking dependencies in R code ... NOTE
-Missing or unexported objects:
-  ‘lmerTest::anova’ ‘lmerTest::summary’
-
-This update introduces compatibility with current and previous version of lmerTest. These two functions were renamed in the new version of that package hence the note. 
-  
+0 errors | 0 warnings | 0 notes  
 
 ## Resubmission
 
@@ -26,6 +20,9 @@ This is an minor update to fix error caused by new version of lmerTest.
 There are currently no downstream dependencies for this package
 
 
+## Version 1.3.3
+
+Not Released
 
 ## Version 1.3.2
 
