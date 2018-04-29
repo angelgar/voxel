@@ -6,7 +6,7 @@ Functions for the voxelwise analysis of NIfTI data in R.
 
 v1.3.3 2018.04
 
-* Minor update to fix error caused by new version of lmerTest (Thanks to Rune Haubo Bojesen).
+* Change compatibility to lmerTest (>= 3.0-1)
 
 v1.3.2 2017.07
 
