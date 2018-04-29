@@ -19,8 +19,8 @@
 #'
 #' @return Returns list of models fitted to each voxel over the masked images passed to function.
 #' @export
-#'
-#'
+#' @import lmerTest
+#' @importFrom stats anova
 #'
 #' @examples
 #'
