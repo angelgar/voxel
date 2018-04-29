@@ -80,7 +80,7 @@ rlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   model <- parallel::mclapply(m,
                               FUN = function(x, data,  ...) {
                                 foo <- base::do.call(lmerTest::lmer, list(formula = x, data=data, ...))
-                                return(list(lmerTest_summary(foo)$coefficients, lmerTest_summary(foo)$residuals))
+                                return(list(lmerTest:: summary.lmerModLmerTest(foo)$coefficients, lmerTest:: summary.lmerModLmerTest(foo)$residuals))
                               }, data=imageMat, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
 
   timeOut <- proc.time() - timeIn

@@ -83,7 +83,7 @@ anovalmerVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, ddf
   model <- parallel::mclapply(m,
                               FUN = function(x, data, ddf, type,  ...) {
                                 foo <- base::do.call(lmerTest::lmer, list(formula = x, data=data, ...))
-                                return(lmerTest_anova(foo, ddf=ddf, type=type))
+                                return(anova(foo, ddf=ddf, type=type))
                               }, data=imageMat,ddf=ddf,type=type, ..., mc.preschedule = mc.preschedule , mc.cores = ncores)
 
   timeOut <- proc.time() - timeIn
