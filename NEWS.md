@@ -4,6 +4,10 @@ Functions for the voxelwise analysis of NIfTI data in R.
 
 #### Change log
 
+v1.3.5 2018.06
+
+* Change compatibility to ggplot2 (>= 2.3.0)
+
 v1.3.4 2018.04
 
 * Change compatibility to lmerTest (>= 3.0-1)
