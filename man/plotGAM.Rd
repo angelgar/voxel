@@ -14,7 +14,7 @@ plotGAM(gamFit, smooth.cov, groupCovs = NULL, orderedAsFactor = T,
 
 \item{groupCovs}{(character)  name of group variable to plot by, if NULL (default) then there are no groups in plot}
 
-\item{orderedAsFactor}{if TRUE (default) then the model is refitted with ordered variables as factors.}
+\item{orderedAsFactor}{if TRUE then the model is refitted with ordered variables as factors.}
 
 \item{rawOrFitted}{If FALSE (default) then only smooth terms are plotted; if rawOrFitted = "raw" then raw values are plotted against smooth; if rawOrFitted = "fitted" then fitted values are plotted against smooth}
 
@@ -30,15 +30,15 @@ GAM plotting using ggplot2
 
 data <- data.frame(x = rep(1:20, 2), group = rep(1:2, each = 20))
 set.seed(1)
-data$y <- (data$x^2)*data$group*3 + rnorm(40, sd = 200) 
+data$y <- (data$x^2)*data$group*3 + rnorm(40, sd = 200)
 data$group <- ordered(data$group)
 
 gam <- mgcv::gam(y ~ s(x) + group, data=data)
 
-plot1 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = NULL, 
+plot1 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = NULL,
                   rawOrFitted = "raw", plotCI=TRUE, orderedAsFactor = FALSE)
 gam <- mgcv::gam(y ~ s(x) + group + s(x, by=group), data=data)
-plot2 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = "group", 
+plot2 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = "group",
                              rawOrFitted = "raw", orderedAsFactor = FALSE)
 }
 \seealso{

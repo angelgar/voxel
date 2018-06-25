@@ -126,12 +126,12 @@ plotGAM <- function(gamFit, smooth.cov ,
 
 
     if (rawOrFitted == "raw") {
-      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=as_vector(temp.data[smooth.cov]), y=temp.data[,1]))
+      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr:as_vector(temp.data[smooth.cov]), y=temp.data[,1]))
       base::return(plot)
     }
     else if (rawOrFitted == "fitted") {
       temp.data$fitted <- gam$fitted.values
-      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=as_vector(temp.data[smooth.cov]), y=fitted))
+      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr:as_vector(temp.data[smooth.cov]), y=fitted))
       base::return(plot)
     }
     else {
@@ -248,12 +248,12 @@ plotGAM <- function(gamFit, smooth.cov ,
       }
 
       if (rawOrFitted == "raw") {
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr:as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
         base::return(plot)
       }
       else if (rawOrFitted == "fitted") {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr:as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
         base::return(plot)
       }
       else {
@@ -339,11 +339,11 @@ plotGAM <- function(gamFit, smooth.cov ,
 
 
       if (rawOrFitted == "raw") {
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= purrr:as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
         base::return(plot)
       } else if (rawOrFitted == "fitted") {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= purrr:as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
         base::return(plot)
       } else {
         base::return(plot)
