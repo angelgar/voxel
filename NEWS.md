@@ -1,4 +1,4 @@
-#voxel
+# voxel
 
 Functions for the voxelwise analysis of NIfTI data in R.
 
