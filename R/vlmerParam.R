@@ -31,7 +31,7 @@
 #' fm1 <- "~ x + (1|id)"
 #' models <- vlmerParam(image, mask, formula = fm1, subjData = covs, ncores = 1)
 #'
-#' @importFrom lmerTest lmer summary
+#' @importFrom lmerTest lmer
 
 vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, ...) {
 
@@ -80,7 +80,7 @@ vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   model <- parallel::mclapply(m,
                               FUN = function(x, data,  ...) {
                                 foo <- base::do.call(lmerTest::lmer, list(formula = x, data=data, ...))
-                                return(lmerTest::summary(foo)$coefficients)
+                                return(summary(foo)$coefficients)
                               }, data=imageMat, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
 
   timeOut <- proc.time() - timeIn

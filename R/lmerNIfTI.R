@@ -23,7 +23,8 @@
 #' @export
 #'
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #'
 #'
 #' image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
@@ -32,11 +33,7 @@
 #' covs <- data.frame(x = runif(25), id = rep(1:5,5))
 #' fm1 <- "~ x + (1|id)"
 #' Maps <- lmerNIfTI(image, mask, formula = fm1, subjData = covs, method="fdr", ncores = 1)
-#'
-
-
-
-
+#' }
 lmerNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData,
                       mc.preschedule = TRUE, ncores = 1, method="none",
                       residual=FALSE, outDir = NULL, ...) {
@@ -47,19 +44,6 @@ lmerNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData,
   if (missing(subjData)) { stop("subjData is missing")}
 
   if (class(formula) != "character") { stop("formula class must be character")}
-<<<<<<< HEAD
-
-  models <- vlmerParam(image, mask , fourdOut = fourdOut,
-                      formula = formula, subjData = subjData,
-                      mc.preschedule = mc.preschedule, ncores = ncores, ...)
-
-  print("Creating parametric maps")
-
-  return(parMap(parameters = models, mask = mask, method=method, outDir = outDir))
-
-}
-=======
-
   if (residual) {
 
     models <- rlmerParam(image, mask, fourdOut = fourdOut,
@@ -83,7 +67,4 @@ lmerNIfTI <- function(image, mask , fourdOut = NULL, formula, subjData,
   }
 
 
-
-
 }
->>>>>>> upstream/master
