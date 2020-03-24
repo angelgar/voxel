@@ -1,3 +1,8 @@
+# 1.3.3
+
+* Fixing some documentation issues on the end of `lmerTest`
+
+
 # v1.3.2 2017.07
 
 * New function to run fsl randomise on generalized additive models
