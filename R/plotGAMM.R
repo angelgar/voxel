@@ -23,7 +23,6 @@
 #'
 #'
 #' gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
-<<<<<<< HEAD
 #' plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
 #'                     plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
 #' plot
