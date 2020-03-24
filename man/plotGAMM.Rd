@@ -44,7 +44,7 @@ data$y <- (data$x)*data$group*10 + rnorm(100, sd = 700) + data$index.rnorm + dat
 data$group <- ordered(data$group)
 gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
 plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
-                    plotCI = T, rawOrFitted = "raw", grouping = "index.var")
+                    plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
 plot
 
 plot2 <- plotGAMM(gammFit = gamm, smooth.cov <- "x", groupCovs = "group",

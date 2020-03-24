@@ -27,7 +27,9 @@
 #'                              rawOrFitted = "raw", orderedAsFactor = FALSE)
 #' @import ggplot2
 #' @importFrom stats update
-plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, rawOrFitted = F, plotCI = T) {
+plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
+                    orderedAsFactor = TRUE, rawOrFitted = FALSE,
+                    plotCI = TRUE) {
 
   if (missing(gamFit)) { stop("gamFit is missing")}
   if (missing(smooth.cov)) { stop("smooth.cov is missing")}
@@ -55,11 +57,11 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, 
     main.smooth <- base::paste0("s(", smooth.cov)
     interaction.smooth <- base::paste0("s(", smooth.cov, ",by=")
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed= TRUE)) {
       base::stop("smooth.cov is not included in formula for original model fit")
     }
 
-    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed= TRUE)) {
       base::stop("smooth.cov has an interaction term in original model fit, pass groupCovs as an argument")
     }
 
@@ -135,14 +137,14 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, 
     }
 
     main.group <- base::paste0("+", groupCovs)
-    if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.group, old.covariates, fixed= TRUE)) {
       base::stop("Error groupCovs is not included as a main effect in original model, include in original fit")
     }
 
-    temp.fm <- strsplit(old.covariates, split='+', fixed = T)[[1]]
+    temp.fm <- strsplit(old.covariates, split='+', fixed = TRUE)[[1]]
     for (i in 1:length(temp.fm)) {
-      if (grepl(main.smooth, temp.fm[i], fixed=T)) {
-        temp.term <- strsplit(temp.fm[i], split=',', fixed = T)[[1]]
+      if (grepl(main.smooth, temp.fm[i], fixed= TRUE)) {
+        temp.term <- strsplit(temp.fm[i], split=',', fixed = TRUE)[[1]]
         if (length(temp.term) > 1) {
           for (j in 2:length(temp.term)) {
             if (grepl('=',temp.term[j])) {
@@ -173,9 +175,9 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, 
     old.covariates <- paste0(temp.fm, collapse="+")
     old.covariates <- base::gsub(" ", "", old.covariates)
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T) &  base::class(temp.data[groupCovs][,1])[1] == "ordered") {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed= TRUE) &  base::class(temp.data[groupCovs][,1])[1] == "ordered") {
       base::stop("smooth.cov is not included in formula for original model fit, model might be incorrectly parametrized")
-    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed= TRUE)) {
       base::warning("smooth.cov has no interaction term in original model fit")
 
 
@@ -239,7 +241,7 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, 
     else {
 
       main.group <- base::paste0("+", groupCovs)
-      if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+      if (!base::grepl(pattern = main.group, old.covariates, fixed= TRUE)) {
         base::stop("groupCovs is not included as main effect in original model, please include in original fit")
       }
 
@@ -248,9 +250,9 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL, orderedAsFactor = T, 
         temp.data[groupCovs] <- as.factor(as.character(temp.data[groupCovs][,1]))
 
         textCall <- gam$call
-        temp.fm.updated <- strsplit(old.covariates, split='+', fixed = T)[[1]]
-        index.Main <- setdiff(grep(pattern = main.smooth, x = temp.fm.updated, fixed = T),
-                              grep(pattern = interaction.smooth, x = temp.fm.updated, fixed = T))
+        temp.fm.updated <- strsplit(old.covariates, split='+', fixed = TRUE)[[1]]
+        index.Main <- setdiff(grep(pattern = main.smooth, x = temp.fm.updated, fixed = TRUE),
+                              grep(pattern = interaction.smooth, x = temp.fm.updated, fixed = TRUE))
         temp.fm.updated <- temp.fm[-index.Main]
         updatedCovs <- paste0(temp.fm.updated, collapse="+")
         updatedCovs <- base::gsub(" ", "", updatedCovs)

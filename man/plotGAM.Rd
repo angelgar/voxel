@@ -8,9 +8,9 @@ plotGAM(
   gamFit,
   smooth.cov,
   groupCovs = NULL,
-  orderedAsFactor = T,
-  rawOrFitted = F,
-  plotCI = T
+  orderedAsFactor = TRUE,
+  rawOrFitted = FALSE,
+  plotCI = TRUE
 )
 }
 \arguments{

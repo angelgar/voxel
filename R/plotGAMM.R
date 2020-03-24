@@ -21,7 +21,7 @@
 #' data$group <- ordered(data$group)
 #' gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
 #' plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
-#'                     plotCI = T, rawOrFitted = "raw", grouping = "index.var")
+#'                     plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
 #' plot
 #'
 #' plot2 <- plotGAMM(gammFit = gamm, smooth.cov <- "x", groupCovs = "group",
@@ -81,11 +81,11 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
     main.smooth <- base::paste0("s(", smooth.cov)
     interaction.smooth <- base::paste0("s(", smooth.cov, ",by=")
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE)) {
       base::stop("smooth.cov is not included in formula for original model fit")
     }
 
-    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed=TRUE)) {
       base::stop("smooth.cov has an interaction term in original model fit, pass groupCovs as an argument")
     }
 
@@ -194,14 +194,14 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
 
 
     main.group <- base::paste0("+", groupCovs)
-    if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.group, old.covariates, fixed=TRUE)) {
       base::stop("Error groupCovs is not included as a main effect in original model, include in original fit")
     }
 
-    temp.fm <- strsplit(old.covariates, split='+', fixed = T)[[1]]
+    temp.fm <- strsplit(old.covariates, split='+', fixed = TRUE)[[1]]
     for (i in 1:length(temp.fm)) {
-      if (grepl(main.smooth, temp.fm[i], fixed=T)) {
-        temp.term <- strsplit(temp.fm[i], split=',', fixed = T)[[1]]
+      if (grepl(main.smooth, temp.fm[i], fixed=TRUE)) {
+        temp.term <- strsplit(temp.fm[i], split=',', fixed = TRUE)[[1]]
         if (length(temp.term) > 1) {
           for (j in 2:length(temp.term)) {
             if (grepl('=',temp.term[j])) {
@@ -233,9 +233,9 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
     old.covariates <- base::gsub(" ", "", old.covariates)
 
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T) &  base::class(temp.data[groupCovs][[1]])[1] == "ordered") {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE) &  base::class(temp.data[groupCovs][[1]])[1] == "ordered") {
       base::stop("smooth.cov is not included in formula for original model fit, model might be incorrectly parametrized")
-    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=TRUE)) {
       base::warning("smooth.cov has no interaction term in original model fit")
 
 
@@ -331,7 +331,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
     } else {
 
       main.group <- base::paste0("+", groupCovs)
-      if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+      if (!base::grepl(pattern = main.group, old.covariates, fixed=TRUE)) {
         base::stop("groupCovs is not included as main effect in original model, please include in original fit")
       }
 
@@ -343,7 +343,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
         temp.data[groupCovs] <- as.factor(as.character(temp.data[groupCovs][[1]]))
 
         textCall <- gam$call
-        updatedCovs <- base::gsub(main.smooth, replacement = "", old.covariates, fixed = T)
+        updatedCovs <- base::gsub(main.smooth, replacement = "", old.covariates, fixed = TRUE)
         updatedformula <- stats::as.formula(paste(old.formula[2], old.formula[1], updatedCovs))
         new.data <- temp.data
 
