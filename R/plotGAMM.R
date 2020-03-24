@@ -4,7 +4,7 @@
 #' @param gammFit fitted gam model as produced by gamm4::gamm()
 #' @param smooth.cov (character) name of smooth term to be plotted
 #' @param groupCovs (character)  name of group variable to plot by, if NULL (default) then there are no groups in plot
-#' @param orderedAsFactor if TRUE (default) then the model is refitted with ordered variables as factors.
+#' @param orderedAsFactor Disabled
 #' @param rawOrFitted If FALSE (default) then only smooth terms are plotted; if rawOrFitted = "raw" then raw values are plotted against smooth; if rawOrFitted = "fitted" then fitted values are plotted against smooth
 #' @param plotCI if TRUE (default) upper and lower confidence intervals are added at 2 standard errors above and below the mean
 #' @param grouping (character) Name of variable that you want to use as the group argument in ggplot2::aes(), useful for better visualization of longitudinal data, (default is NULL)
@@ -12,6 +12,7 @@
 #' @return Returns a ggplot object that can be visualized using the print() function
 #'
 #' @export
+#'
 #' @examples
 #'
 #' set.seed(1)
@@ -19,7 +20,10 @@
 #'               index.rnorm = rep(rnorm(50, sd = 50), 2), index.var = rep(1:50, 2))
 #' data$y <- (data$x)*data$group*10 + rnorm(100, sd = 700) + data$index.rnorm + data$z
 #' data$group <- ordered(data$group)
+#'
+#'
 #' gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
+<<<<<<< HEAD
 #' plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
 #'                     plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
 #' plot
@@ -31,20 +35,23 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
                      orderedAsFactor = TRUE, rawOrFitted = FALSE,
                      plotCI = TRUE, grouping = NULL) {
 
-  if (missing(gammFit)) { stop("gammFit is missing")}
-  if (missing(smooth.cov)) { stop("smooth.cov is missing")}
-
-  if (class(smooth.cov) != "character") { stop("smooth.cov must be a character")}
-  if (class(groupCovs) != "character" & (!is.null(groupCovs))) { stop("groupCovs must be a character")}
-
+  if (missing(gammFit)) {
+    stop("gammFit is missing")}
+  if (missing(smooth.cov)) {
+    stop("smooth.cov is missing")}
+  if (class(smooth.cov) != "character") {
+    stop("smooth.cov must be a character")}
+  if (class(groupCovs) != "character" & (!is.null(groupCovs))) {
+    stop("groupCovs must be a character")}
+  if (!(rawOrFitted == FALSE | rawOrFitted == "raw" | rawOrFitted == "fitted")) {
+    stop("Wrong input for rawOrFitted")
+  }
 
   fit <- fitted <- group <- se.fit <- NULL
 
   if (!(base::class(gammFit$gam) == "gam" & base::class(gammFit$mer) == "lmerMod")) {
     stop("gamFit is not a object created by gamm4()")
   }
-
-  base::print("Working with a GAMM4 object")
 
   if (base::is.character(rawOrFitted)) {
     if (((rawOrFitted == "raw") & base::is.null(grouping))) {
@@ -233,7 +240,8 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
     old.covariates <- base::gsub(" ", "", old.covariates)
 
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE) &  base::class(temp.data[groupCovs][[1]])[1] == "ordered") {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE) &
+        base::class(temp.data[groupCovs][[1]])[1] == "ordered") {
       base::stop("smooth.cov is not included in formula for original model fit, model might be incorrectly parametrized")
     } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=TRUE)) {
       base::warning("smooth.cov has no interaction term in original model fit")
@@ -335,7 +343,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
         base::stop("groupCovs is not included as main effect in original model, please include in original fit")
       }
 
-      orderedAsFactor <- F
+      orderedAsFactor <- FALSE
       print("orderedAsFactor functionality temporally disabled")
 
       if (base::class(temp.data[groupCovs][[1]])[1] == "ordered" & orderedAsFactor) {

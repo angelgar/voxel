@@ -1,4 +1,4 @@
-#' Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables
+#' Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables
 #'
 #'
 #' This function is able to run a Linear Mixed Effect Model using the lmer() function.
@@ -32,7 +32,6 @@
 #' models <- vlmerParam(image, mask, formula = fm1, subjData = covs, ncores = 1)
 #'
 #' @importFrom lmerTest lmer
-
 vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, ...) {
 
   if (missing(image)) { stop("image is missing")}
@@ -74,7 +73,7 @@ vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   imageMat <- cbind(imageMat, subjData)
 
   print("Running test model")
-  model <- lmerTest::lmer(m[[1]], data=imageMat, ...)
+  foo <- base::do.call(lmerTest::lmer, list(formula = m[[1]], data=imageMat, ...))
 
   print("Running parallel models")
   model <- parallel::mclapply(m,

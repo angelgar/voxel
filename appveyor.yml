@@ -1,4 +1,3 @@
-# Neuroconductor Template
 # DO NOT CHANGE the "init" and "install" sections below
 
 # Download script file from GitHub
@@ -21,41 +20,22 @@ cache:
   - C:\RLibrary
 
 # Adapt as necessary starting from here
+environment:
+  NOT_CRAN: true
+  USE_RTOOLS: true    
+  WARNINGS_ARE_ERRORS: 1
+  # env vars that may need to be set, at least temporarily, from time to time
+  # see https://github.com/krlmlr/r-appveyor#readme for details
+  # USE_RTOOLS: true
+  # R_REMOTES_STANDALONE: true
+
+# Adapt as necessary starting from here
+
 build_script:
   - travis-tool.sh install_deps
 
 test_script:
-  - set TMP=C:\
-  - set TMPDIR=C:\
-  - set TEMP=C:\
-  # need to move to higher dir because CMake path req
-  - mkdir -p C:\run
-  - cp -avr * C:\run
-  # need the tool a level above
-  - cp ../travis-tool.sh C:\
-  - cd C:\run
-  # setting PATH to be specific - no MinGW overall - just R's
-  - set PATH=C:\Rtools\bin;C:\Rtools\MinGW\bin;
-  - set PATH=%PATH%;C:\Rtools\mingw_64\bin;
-  - set PATH=%PATH%;C:\Program Files\Git\cmd;
-  - set PATH=%PATH%;C:\Program Files (x86)\CMake\bin;
-  - set PATH=%PATH%;"C:\Program Files (x86)\CMake\bin";
-  - set PATH=%PATH%;C:\R\bin\i386;  
-  - set PATH=%PATH%;C:\Program Files\Git\usr\bin  
-  - set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\npm
-  - set PATH=%PATH%;C:\Users\appveyor\AppData\Local\Yarn\bin
-  - set PATH=%PATH%;C:\Program Files\AppVeyor\BuildAgent\
-  - set PATH=%PATH%;C:\Windows\system32
-  - set PATH=%PATH%;C:\Windows
-  - set PATH=%PATH%;C:\Windows\System32\Wbem
-  - set PATH=%PATH%;C:\Windows\System32\WindowsPowerShell\v1.0\
-  - set PATH=%PATH%;C:\Program Files\7-Zip
   - travis-tool.sh run_tests
-  - ls
-  - ls ../
-  # - cp ../*.zip ./
-  - cp -r C:/run/* %APPVEYOR_BUILD_FOLDER%
-  - cd %APPVEYOR_BUILD_FOLDER%
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
@@ -77,12 +57,5 @@ artifacts:
   - path: '\*_*.zip'
     name: Bits
 
-deploy:
-  provider: GitHub
-  description: 'Windows Binary'
-  auth_token:
-    secure: dUI5DBS31Kfp6DIqx8NSxsyTkOOXbF5QkW6vi+++/smzii3mGky/YYRTA9KJX+1Z
-  draft: false
-  prerelease: false
-  on:
-    appveyor_repo_tag: true
+  - path: '\*_*.tar.gz'
+    name: Bits

@@ -4,13 +4,14 @@
 #' @param gamFit fitted gam model as produced by mgcv::gam()
 #' @param smooth.cov (character) name of smooth term to be plotted
 #' @param groupCovs (character)  name of group variable to plot by, if NULL (default) then there are no groups in plot
-#' @param orderedAsFactor if TRUE (default) then the model is refitted with ordered variables as factors.
+#' @param orderedAsFactor if TRUE then the model is refitted with ordered variables as factors.
 #' @param rawOrFitted If FALSE (default) then only smooth terms are plotted; if rawOrFitted = "raw" then raw values are plotted against smooth; if rawOrFitted = "fitted" then fitted values are plotted against smooth
 #' @param plotCI if TRUE (default) upper and lower confidence intervals are added at 2 standard errors above and below the mean
 #'
 #' @return Returns a ggplot object that can be visualized using the print() function
 #'
 #' @export
+#'
 #' @examples
 #'
 #' data <- data.frame(x = rep(1:20, 2), group = rep(1:2, each = 20))
@@ -27,15 +28,22 @@
 #'                              rawOrFitted = "raw", orderedAsFactor = FALSE)
 #' @import ggplot2
 #' @importFrom stats update
-plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
-                    orderedAsFactor = TRUE, rawOrFitted = FALSE,
-                    plotCI = TRUE) {
+plotGAM <- function(gamFit, smooth.cov ,
+                    groupCovs = NULL, orderedAsFactor = TRUE,
+                    rawOrFitted = FALSE, plotCI = TRUE) {
 
-  if (missing(gamFit)) { stop("gamFit is missing")}
-  if (missing(smooth.cov)) { stop("smooth.cov is missing")}
+  if (missing(gamFit)) {
+    stop("gamFit is missing")}
+  if (missing(smooth.cov)) {
+    stop("smooth.cov is missing")}
+  if (class(smooth.cov) != "character") {
+    stop("smooth.cov must be a character")}
+  if (class(groupCovs) != "character" & (!is.null(groupCovs))) {
+    stop("groupCovs must be a character")}
+  if (!(rawOrFitted == F | rawOrFitted == "raw" | rawOrFitted == "fitted")) {
+    stop("Wrong input for rawOrFitted")
+  }
 
-  if (class(smooth.cov) != "character") { stop("smooth.cov must be a character")}
-  if (class(groupCovs) != "character" & (!is.null(groupCovs))) { stop("groupCovs must be a character")}
 
 
   fit <- fitted <- group <- se.fit <- NULL
@@ -43,8 +51,6 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
   if (base::class(gamFit)[1] != "gam") {
     stop("gamFit is not a object of type gam")
   }
-
-  base::print("Working with a GAM Model")
 
   if (base::is.null(groupCovs)) {
 
@@ -73,10 +79,12 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
         if (base::any(base::class(temp.data[i][,1])[1] == c("numeric", "integer","boolean"))) {
           plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][,1])
           base::names(plot.df)[base::dim(plot.df)[2]] <- i
-        } else if (base::any(base::class(temp.data[i][,1])[1] == c("character", "factor","ordered"))) {
+        }
+        else if (base::any(base::class(temp.data[i][,1])[1] == c("character", "factor","ordered"))) {
           plot.df[, base::dim(plot.df)[2] + 1] <- temp.data[i][1,1]
           base::names(plot.df)[base::dim(plot.df)[2]] <- i
-        } else {
+        }
+        else {
           stop(base::paste("Unrecognized data type for",i,"please refit cluster model with different datatype"))
         }
       }
@@ -111,13 +119,15 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
 
 
     if (rawOrFitted == "raw") {
-      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=temp.data[,1]))
+      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1]))
       base::return(plot)
-    } else if (rawOrFitted == "fitted") {
+    }
+    else if (rawOrFitted == "fitted") {
       temp.data$fitted <- gam$fitted.values
-      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=fitted))
+      plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr::as_vector(temp.data[smooth.cov]), y=fitted))
       base::return(plot)
-    } else {
+    }
+    else {
       base::return(plot)
     }
 
@@ -154,7 +164,8 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
                   if (all(order == 1)) {
                     order <- c(1,2)
                     temp.term <- temp.term[order]
-                  } else {
+                  }
+                else {
                     order <- c(order, NA)
                     order <- order[c(1, length(order), 2:(length(order) - 1))]
                     order[2] <- j
@@ -163,7 +174,8 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
                     temp.term[length(temp.term)]<- paste0(temp.term[length(temp.term)], ")")
                   }
                 }
-            } else {
+            }
+            else {
               base::stop("spline containing smooth.cov has more than one variable, refit with only one")
             }
           }
@@ -226,13 +238,15 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
       }
 
       if (rawOrFitted == "raw") {
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=temp.data[,1], col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
         base::return(plot)
-      } else if (rawOrFitted == "fitted") {
+      }
+      else if (rawOrFitted == "fitted") {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=fitted, col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=purrr::as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
         base::return(plot)
-      } else {
+      }
+      else {
         base::return(plot)
       }
 
@@ -315,11 +329,11 @@ plotGAM <- function(gamFit, smooth.cov , groupCovs = NULL,
 
 
       if (rawOrFitted == "raw") {
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=temp.data[,1], col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=temp.data[groupCovs][,1]))
         base::return(plot)
       } else if (rawOrFitted == "fitted") {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[smooth.cov], y=fitted, col=temp.data[groupCovs][,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x= purrr::as_vector(temp.data[smooth.cov]), y=fitted, col=temp.data[groupCovs][,1]))
         base::return(plot)
       } else {
         base::return(plot)

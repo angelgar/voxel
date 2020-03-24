@@ -1,4 +1,53 @@
-## Version 1.3.2 
+## Version 1.3.5
+
+## Test environments
+* local OS X install, R 3.3.1
+* win-builder (devel and release)
+* ubuntu 12.04 on travis-ci, (devel)
+
+## R CMD check results
+
+Status: OK
+
+R CMD check results
+0 errors | 0 warnings | 0 notes  
+
+## Resubmission
+
+This is an minor update to fix error caused by new version of ggplot2.
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package
+
+
+
+## Version 1.3.4
+
+## Test environments
+* local OS X install, R 3.3.1
+* win-builder (devel and release)
+* ubuntu 12.04 on travis-ci, (devel)
+
+## R CMD check results
+
+Status: OK
+
+R CMD check results
+0 errors | 0 warnings | 0 notes  
+
+## Resubmission
+
+This is an minor update to fix error caused by new version of lmerTest.
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package
+
+
+## Version 1.3.3
+
+Not Released
+
+## Version 1.3.2
 
 ## Test environments
 * local OS X install, R 3.3.1

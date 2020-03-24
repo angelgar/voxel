@@ -1,7 +1,15 @@
-# 1.3.3
+# v1.3.5 2018.06
 
+* Change compatibility to ggplot2 (>= 2.3.0)
 * Fixing some documentation issues on the end of `lmerTest`
 
+# v1.3.4 2018.04
+
+* Change compatibility to lmerTest (>= 3.0-1)
+
+# v1.3.3 2018.04
+
+* Not released
 
 # v1.3.2 2017.07
 

@@ -11,7 +11,6 @@
 #' @param subjData Dataframe containing all the covariates used for the analysis
 #' @param dispersion To be passed to mgcv::anova.gam, Defaults to NULL. Dispersion Parameter, not normally used.
 #' @param freq To be passed to mgcv::anova.gam, Defaults to FALSE. Frequentist or Bayesian approximations for p-values
-#' @param p.type To be passed to mgcv::anova.gam, Defaults to 0. Exact test statistics o use for smooth terms.
 #' @param mc.preschedule Argument to be passed to mclapply, whether or not to preschedule the jobs. More info in parallel::mclapply
 #' @param ncores Number of cores to use
 #' @param ... Additional arguments passed to gam()
@@ -20,8 +19,8 @@
 #'
 #' @export
 #' @examples
-#' image <- oro.nifti::nifti(img = array(1:1600, dim =c(4,4,4,25)))
-#' mask <- oro.nifti::nifti(img = array(0:1, dim = c(4,4,4,1)))
+#' image <- oro.nifti::nifti(img = array(1:200, dim =c(2,2,2,25)))
+#' mask <- oro.nifti::nifti(img = array(0:1, dim = c(2,2,2,1)))
 #' set.seed(1)
 #' covs <- data.frame(x = runif(25), y=runif(25))
 #' fm1 <- "~ s(x) + y"
@@ -29,7 +28,7 @@
 #'               formula=fm1, subjData=covs, ncores = 1)
 #' @importFrom mgcv anova.gam gam
 anovagamVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, dispersion = NULL,
-                          freq = FALSE, p.type=0, mc.preschedule = TRUE, ncores = 1, ...) {
+                          freq = FALSE, mc.preschedule = TRUE, ncores = 1, ...) {
 
   if (missing(image)) { stop("image is missing")}
   if (missing(mask)) { stop("mask is missing")}
@@ -69,16 +68,16 @@ anovagamVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, disp
   print("Running test ANOVA")
   model <- mgcv::gam(m[[1]], data=imageMat, ...)
   model <- mgcv::anova.gam(model, dispersion = dispersion,
-                           freq = freq, p.type = p.type)
+                           freq = freq)
 
   print("Running parallel ANOVAs")
   model <- parallel::mclapply(m,
-                              FUN = function(x, data, dispersion, freq, p.type, ...) {
+                              FUN = function(x, data, dispersion, freq, ...) {
                                 foo <- mgcv::gam(x, data=data, ...)
                                 foo <- mgcv::anova.gam(foo, dispersion = dispersion,
-                                                       freq = freq, p.type = p.type)
+                                                       freq = freq)
                                 return(list(anovaPTable = foo$pTerms.table, anovaSTable = foo$s.table))
-                              }, data=imageMat, dispersion, freq, p.type, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
+                              }, data=imageMat, dispersion, freq, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
 
 
   timeOut <- proc.time() - timeIn

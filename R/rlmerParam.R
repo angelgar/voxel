@@ -74,13 +74,13 @@ rlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.pres
   imageMat <- cbind(imageMat, subjData)
 
   print("Running test model")
-  model <- lmerTest::lmer(m[[1]], data=imageMat, ...)
+  model <- base::do.call(lmerTest::lmer, list(formula = m[[1]], data=imageMat, ...))
 
   print("Running parallel models")
   model <- parallel::mclapply(m,
                               FUN = function(x, data,  ...) {
                                 foo <- base::do.call(lmerTest::lmer, list(formula = x, data=data, ...))
-                                foo <- base::do.call(lmerTest::lmer, list(formula = x, data=data, ...))
+
                                 return(list(summary(foo)$coefficients, summary(foo)$residuals))
                               }, data=imageMat, ..., mc.preschedule = mc.preschedule, mc.cores = ncores)
 

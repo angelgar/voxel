@@ -1,6 +1,4 @@
-# Neuroconductor Template no ANTs
-language: r
-sudo: false
+language: R
 cache: packages
 warnings_are_errors: true
 use_bioc: true
