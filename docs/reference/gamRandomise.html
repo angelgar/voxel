@@ -8,11 +8,13 @@
 
 <title>Generate FSL Randomise call for a GAM Model — gamRandomise • voxel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,12 +34,13 @@
 
 
 
-<meta property="og:title" content="Generate FSL Randomise call for a GAM Model — gamRandomise" />
 
+<meta property="og:title" content="Generate FSL Randomise call for a GAM Model — gamRandomise" />
 <meta property="og:description" content="This function is able to generate all the necessary files to run randomise with a GAM Model
 This script will write out all design and contrast files 
 This function will run a f-test to compare a full and reduced model (a model with and without spline)" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -87,7 +90,6 @@ This function will run a f-test to compare a full and reduced model (a model wit
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/angelgar/voxel">
@@ -114,16 +116,23 @@ This function will run a f-test to compare a full and reduced model (a model wit
     </div>
 
     <div class="ref-description">
-    
     <p>This function is able to generate all the necessary files to run randomise with a GAM Model
 This script will write out all design and contrast files 
 This function will run a f-test to compare a full and reduced model (a model with and without spline)</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>gamRandomise</span>(<span class='no'>image</span>, <span class='kw'>maskPath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>formulaFull</span>, <span class='no'>formulaRed</span>, <span class='no'>subjData</span>,
-  <span class='no'>outDir</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>run</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>gamRandomise</span>(
+  <span class='no'>image</span>,
+  <span class='kw'>maskPath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>formulaFull</span>,
+  <span class='no'>formulaRed</span>,
+  <span class='no'>subjData</span>,
+  <span class='no'>outDir</span>,
+  <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>run</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -164,11 +173,10 @@ This function will run a f-test to compare a full and reduced model (a model wit
       <td><p>FALSE will only print randomise command but won't it</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Return randomise command</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -189,9 +197,7 @@ This function will run a f-test to compare a full and reduced model (a model wit
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

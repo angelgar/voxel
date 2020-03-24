@@ -8,11 +8,13 @@
 
 <title>Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Mixed Effects Model. — anovagammVoxel • voxel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,12 +34,13 @@
 
 
 
-<meta property="og:title" content="Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Mixed Effects Model. — anovagammVoxel" />
 
+<meta property="og:title" content="Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Mixed Effects Model. — anovagammVoxel" />
 <meta property="og:description" content="This function computes analysis of variance tables for the fitted Generalized Additive Mixed Effects (from gamm4::gamm4) models.
 The analysis will run in all voxels in the specified mask and will return a list with the ANOVA table at each voxel.
 Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -87,7 +90,6 @@ Please check the mgcv::anova.gam documentation for further information about spe
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/angelgar/voxel">
@@ -114,17 +116,25 @@ Please check the mgcv::anova.gam documentation for further information about spe
     </div>
 
     <div class="ref-description">
-    
     <p>This function computes analysis of variance tables for the fitted Generalized Additive Mixed Effects (from gamm4::gamm4) models.
 The analysis will run in all voxels in the specified mask and will return a list with the ANOVA table at each voxel.
 Please check the mgcv::anova.gam documentation for further information about specific arguments used in anova.gam. Multi-model calls are disabled.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>anovagammVoxel</span>(<span class='no'>image</span>, <span class='no'>mask</span>, <span class='kw'>fourdOut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>formula</span>, <span class='no'>randomFormula</span>, <span class='no'>subjData</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>freq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mc.preschedule</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>anovagammVoxel</span>(
+  <span class='no'>image</span>,
+  <span class='no'>mask</span>,
+  <span class='kw'>fourdOut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>formula</span>,
+  <span class='no'>randomFormula</span>,
+  <span class='no'>subjData</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>freq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>mc.preschedule</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -173,11 +183,10 @@ Please check the mgcv::anova.gam documentation for further information about spe
       <td><p>Additional arguments passed to gamm4()</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns list of models fitted to each voxel over the masked images passed to function.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -196,16 +205,14 @@ Please check the mgcv::anova.gam documentation for further information about spe
 #&gt; [1] "Running test ANOVA"
 #&gt; [1] "Running parallel ANOVAs"
 #&gt; elapsed 
-#&gt;   0.571 
+#&gt;   0.638 
 #&gt; [1] "Parallel ANOVAs Ran"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
