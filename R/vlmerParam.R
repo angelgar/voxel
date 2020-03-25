@@ -31,8 +31,7 @@
 #' fm1 <- "~ x + (1|id)"
 #' models <- vlmerParam(image, mask, formula = fm1, subjData = covs, ncores = 1)
 #'
-
-
+#' @importFrom lmerTest lmer
 vlmerParam <- function(image, mask , fourdOut = NULL, formula, subjData, mc.preschedule = TRUE, ncores = 1, ...) {
 
   if (missing(image)) { stop("image is missing")}

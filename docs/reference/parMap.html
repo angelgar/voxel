@@ -8,11 +8,13 @@
 
 <title>Create parametric maps — parMap • voxel</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,13 +34,14 @@
 
 
 
-<meta property="og:title" content="Create parametric maps — parMap" />
 
+<meta property="og:title" content="Create parametric maps — parMap" />
 <meta property="og:description" content="This function create parametric maps according from model parametric tables or analysis of variance tables. 
 The function will return a p-map, t-map, signed z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms. 
 Additionally the function will return a p-map, F-map, p-to-z-map, and p-adjusted-map if the input is ANOVA.
 You can select which type of p-value correction you want done on the map. The z-maps are signed just like FSL." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -88,7 +91,6 @@ You can select which type of p-value correction you want done on the map. The z-
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/angelgar/voxel">
@@ -115,16 +117,14 @@ You can select which type of p-value correction you want done on the map. The z-
     </div>
 
     <div class="ref-description">
-    
     <p>This function create parametric maps according from model parametric tables or analysis of variance tables. 
 The function will return a p-map, t-map, signed z-map, p-adjusted-map for parametric terms and p-map, z-map, p-adjusted-map for smooth terms. 
 Additionally the function will return a p-map, F-map, p-to-z-map, and p-adjusted-map if the input is ANOVA.
 You can select which type of p-value correction you want done on the map. The z-maps are signed just like FSL.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>parMap</span>(<span class='no'>parameters</span>, <span class='no'>mask</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -145,11 +145,10 @@ You can select which type of p-value correction you want done on the map. The z-
       <td><p>Path to the folder where to output parametric maps (Default is Null, only change if you want to write maps out)</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Return parametric maps of the fitted models</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>image</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>oro.nifti</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/oro.nifti/man/nifti.html'>nifti</a></span>(<span class='kw'>img</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fl'>1</span>:<span class='fl'>1600</span>, <span class='kw'>dim</span> <span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>,<span class='fl'>4</span>,<span class='fl'>25</span>)))
@@ -157,22 +156,20 @@ You can select which type of p-value correction you want done on the map. The z-
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
 <span class='no'>covs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>25</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>25</span>))
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='st'>"~ x + y"</span>
-<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'>vlmParam</span>(<span class='kw'>image</span><span class='kw'>=</span><span class='no'>image</span>, <span class='kw'>mask</span><span class='kw'>=</span><span class='no'>mask</span>,
+<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vlmParam.html'>vlmParam</a></span>(<span class='kw'>image</span><span class='kw'>=</span><span class='no'>image</span>, <span class='kw'>mask</span><span class='kw'>=</span><span class='no'>mask</span>,
               <span class='kw'>formula</span><span class='kw'>=</span><span class='no'>fm1</span>, <span class='kw'>subjData</span><span class='kw'>=</span><span class='no'>covs</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] "Created time series to matrix"
 #&gt; [1] "Created formula list"
 #&gt; [1] "Running test model"
 #&gt; [1] "Running parallel models"
 #&gt; elapsed 
-#&gt;   0.033 
+#&gt;   0.029 
 #&gt; [1] "Parallel Models Ran"</div><div class='input'><span class='no'>Maps</span> <span class='kw'>&lt;-</span> <span class='fu'>parMap</span>(<span class='no'>models</span>, <span class='no'>mask</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"fdr"</span>)</div><div class='output co'>#&gt; [1] "Working with output from lm model"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

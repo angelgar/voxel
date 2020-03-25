@@ -19,8 +19,7 @@
 #'
 #' @return Returns list of models fitted to each voxel over the masked images passed to function.
 #' @export
-#' @import lmerTest
-#' @importFrom stats anova
+#' @import stats
 #'
 #' @examples
 #'
@@ -75,7 +74,6 @@ anovalmerVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, ddf
 
   timeIn <- proc.time()
   print("Running test ANOVA")
-
   foo <- base::do.call(lmerTest::lmer, list(formula = m[[1]], data=imageMat, ...))
   model <- anova(foo, ddf=ddf, type=type)
 

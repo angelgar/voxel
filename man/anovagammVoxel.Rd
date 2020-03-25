@@ -4,9 +4,19 @@
 \alias{anovagammVoxel}
 \title{Computes voxelwise analysis of variance (ANOVA) tables for a Generalized Additive Mixed Effects Model.}
 \usage{
-anovagammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
-  dispersion = NULL, freq = FALSE, mc.preschedule = TRUE, ncores = 1,
-  ...)
+anovagammVoxel(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  randomFormula,
+  subjData,
+  dispersion = NULL,
+  freq = FALSE,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}

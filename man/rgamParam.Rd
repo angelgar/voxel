@@ -4,8 +4,16 @@
 \alias{rgamParam}
 \title{Run a Generalized Additive Model on all voxels of a NIfTI image and return coefficients and residuals}
 \usage{
-rgamParam(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+rgamParam(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}

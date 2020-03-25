@@ -4,8 +4,16 @@
 \alias{lmCluster}
 \title{Run a Linear Model on the mean intensity over a region of interest}
 \usage{
-lmCluster(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+lmCluster(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}

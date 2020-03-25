@@ -2,10 +2,18 @@
 % Please edit documentation in R/vlmParam.R
 \name{vlmParam}
 \alias{vlmParam}
-\title{Run a Linear Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables}
+\title{Run a Linear Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables}
 \usage{
-vlmParam(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+vlmParam(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}
@@ -28,7 +36,7 @@ vlmParam(image, mask, fourdOut = NULL, formula, subjData,
 Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function is able to run a Linear Model using the stats package. 
+This function is able to run a Linear Model using the stats package.
 The analysis will run in all voxels in in the mask and will and will return parametric coefficients at each voxel.
 }
 \examples{

@@ -4,8 +4,16 @@
 \alias{vgamParam}
 \title{Run a Generalized Additive Model on all voxels of a NIfTI image within a mask and return parametric and smooth coefficients tables}
 \usage{
-vgamParam(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+vgamParam(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}

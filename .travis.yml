@@ -1,4 +1,95 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: R
 cache: packages
+warnings_are_errors: true
+use_bioc: true
+bioc_required: true
+cran: http://cran.rstudio.com
+
+addons:
+  apt:
+    packages:
+    - libfftw3-dev
+    - libgsl0-dev
+    - libgsl0ldbl
+
+
+os:
+  - linux
+  - osx
+osx_image: xcode9 
+dist: trusty
+
+env:
+  global: 
+    - RGL_USE_NULL=TRUE
+    - PROJECT_NAME=neuroconductor
+    - DISPLAY=:99.0
+r_check_args: --as-cran
+# r_check_args: "--as-cran --install-args=--build"
+
+before_install:
+  - export PROJ_DIR=`basename $PWD`    
+  - fname=travis_helpers.sh
+  - wget -O ${fname} http://bit.ly/travis_helpers
+  - cat ${fname}; source ${fname}; rm ${fname}  
+  - cat DESCRIPTION
+  - start_xvfb ;
+  - no_open_mp ; 
+  - Rscript -e 'source("https://install-github.me/mangothecat/callr")'
+  - remove_neuroc_packages 
+  - cat DESCRIPTION
+  - install_remotes_no_dep
+  - cat DESCRIPTION
+  - export PACKAGE_NAME=`package_name`
+  - if [[ "${PACKAGE_NAME}" == "waveslim" ]]; 
+    then
+      fftw_install ;
+    fi
+  - if [[ "${PACKAGE_NAME}" == "dti" ]]; 
+    then
+      gsl_install ;
+    fi
+
+after_success:
+  - cat ${PACKAGE_NAME}.Rcheck/00install.out
+  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+
+after_failure:
+  - cat ${PACKAGE_NAME}.Rcheck/00install.out
+  - cat ${PACKAGE_NAME}.Rcheck/00check.log
+
+# need this explicitly
+# for naming convention
+before_deploy:
+  - travis_wait 100 R CMD INSTALL --build ${PKG_TARBALL}
+  # so no overwrite of linux build
+  - if [[ "${TRAVIS_OS_NAME}" = "osx" ]];
+    then
+      rm -f *.tar.gz;
+    fi
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "FMshChdN5avEw+YC18A+BtDrAY2GdbSZoRgumgOy4OqminTsfnKNYr3xhCkFxpwiWcrPQnwoSQoLKxzg7gvtmJ+vJyn14BaQvoaW7Y64dYCK7xdLYVb8y9FScWJ15k2htaq2vOonoIE+/wk459/niZQnthkRJrdnvGaKi+6m7zRchiPV0xyGmaZ1dQRYNc+t5/HpJ9E8TEmK/PYKr7Aevz1tofupxl/VThy13copWHOrIf/NMgjeJSxhNiLjvj4LBpxgepOaxjNSD7fHql6HVvsDnujPssLJP7bHiHyqZ0INQhZaCOqOIQ19yq7FI4eAjB2zaNyj9PWVsyvBORloE05L2WsGGkPUSjr9o1YL+vH44CcCmZbOEIeSy7HCehabjYHOV21smuZtf+6BjdNj48ZSGZvtfaH3PIiKikQ334PTGroyUitfz8WgTTsSiA+aeY8m2Bc/H4Y/KvuTTCwA7qj+DiUX/u+I6MLgdYzT2O8O3r2R1okz7vlLk9MMmSpY4TjA2ZinUF+cVx6f+Eri2soEPbJAXLDS3RS9Mc1KgdBFmjdicSUGOd2Tr5+q55SC9P11AYVw9JPvPITWH+kIYfneR7GrrcpqsP9J3y5qg89x4oP9pEsnHINpB/wQQwiLyyNXD3pCaCd9116qKxub8LZXV7qBtjZGQ7rJIGpOl8s="
+  file_glob: true
+  file: ${PACKAGE_NAME}*.t*gz
+  on:
+    tags: true
+
+after_deploy:
+  # travis_wait 100 Rscript -e 'covr::coveralls(type = "all")' ;
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; 
+    then
+      Rscript -e 'covr::coveralls(type = "all")' ;
+    fi
+
+
+# r:
+#   - release
+#   - devel
+
+# matrix:
+#   allow_failures:
+#   - r: devel

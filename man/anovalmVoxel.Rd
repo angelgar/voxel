@@ -4,8 +4,16 @@
 \alias{anovalmVoxel}
 \title{Computes voxelwise analysis of variance (ANOVA) tables for a Linear Model.}
 \usage{
-anovalmVoxel(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+anovalmVoxel(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}

@@ -4,8 +4,13 @@
 \alias{mergeNiftis}
 \title{Merge NIfTI Images across specified direction}
 \usage{
-mergeNiftis(inputPaths, direction = c("x", "y", "z", "t"), outfile = NULL,
-  ncores = 1, ...)
+mergeNiftis(
+  inputPaths,
+  direction = c("x", "y", "z", "t"),
+  outfile = NULL,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{inputPaths}{This is a vector of input filenames (character)}

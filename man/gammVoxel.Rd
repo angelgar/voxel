@@ -4,8 +4,17 @@
 \alias{gammVoxel}
 \title{Run a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image within a mask.}
 \usage{
-gammVoxel(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+gammVoxel(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  randomFormula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}

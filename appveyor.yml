@@ -8,13 +8,16 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 
 install:
-  ps: Bootstrap
+  - ps: Bootstrap
 
 cache:
   - C:\RLibrary
 
+# Adapt as necessary starting from here
 environment:
   NOT_CRAN: true
+  USE_RTOOLS: true    
+  WARNINGS_ARE_ERRORS: 1
   # env vars that may need to be set, at least temporarily, from time to time
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # USE_RTOOLS: true
@@ -45,8 +48,8 @@ artifacts:
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
 
-  - path: '\*_*.tar.gz'
+  - path: '\*_*.zip'
     name: Bits
 
-  - path: '\*_*.zip'
+  - path: '\*_*.tar.gz'
     name: Bits

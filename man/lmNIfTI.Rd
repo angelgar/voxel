@@ -4,9 +4,19 @@
 \alias{lmNIfTI}
 \title{Wrapper to run a model on a NIfTI image and output parametric maps}
 \usage{
-lmNIfTI(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, method = "none", residual = FALSE,
-  outDir = NULL, ...)
+lmNIfTI(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  method = "none",
+  residual = FALSE,
+  outDir = NULL,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}

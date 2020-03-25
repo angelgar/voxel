@@ -3,4 +3,9 @@
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^README\.md$
+^DESCRIPTION\.bak$
+^\./\.travis\.yml\.bak$
 ^appveyor\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

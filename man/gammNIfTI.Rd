@@ -4,9 +4,20 @@
 \alias{gammNIfTI}
 \title{Wrapper to run a Generalized Additive Mixed Effects model on an Nifti and output a parametric map}
 \usage{
-gammNIfTI(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
-  mc.preschedule = TRUE, ncores = 1, method = "none", residual = FALSE,
-  outDir = NULL, ...)
+gammNIfTI(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  randomFormula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  method = "none",
+  residual = FALSE,
+  outDir = NULL,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will call mergeNifti() and merge across time.}

@@ -4,8 +4,16 @@
 \alias{vlmerParam}
 \title{Run a Linear Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric coefficients tables}
 \usage{
-vlmerParam(image, mask, fourdOut = NULL, formula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+vlmerParam(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}

@@ -4,8 +4,7 @@
 \alias{rparMap}
 \title{Create parametric maps and residuals}
 \usage{
-rparMap(parameters, image, mask, method, ncores, mc.preschedule,
-  outDir = NULL)
+rparMap(parameters, image, mask, method, ncores, mc.preschedule, outDir = NULL)
 }
 \arguments{
 \item{parameters}{list of parametric and smooth table coefficients or ANOVA (like the output from vlmParam, vgamParam, anovalmVoxel)}

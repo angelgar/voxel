@@ -26,10 +26,7 @@
 #' fm1 <- "~ s(x) + y"
 #' models <- anovagamVoxel(image=image, mask=mask,
 #'               formula=fm1, subjData=covs, ncores = 1)
-
-
-
-
+#' @importFrom mgcv anova.gam gam
 anovagamVoxel <- function(image, mask , fourdOut = NULL, formula, subjData, dispersion = NULL,
                           freq = FALSE, mc.preschedule = TRUE, ncores = 1, ...) {
 

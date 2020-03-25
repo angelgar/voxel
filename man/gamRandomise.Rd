@@ -4,8 +4,17 @@
 \alias{gamRandomise}
 \title{Generate FSL Randomise call for a GAM Model}
 \usage{
-gamRandomise(image, maskPath = NULL, formulaFull, formulaRed, subjData,
-  outDir, nsim = 500, thresh = 0.01, run = FALSE)
+gamRandomise(
+  image,
+  maskPath = NULL,
+  formulaFull,
+  formulaRed,
+  subjData,
+  outDir,
+  nsim = 500,
+  thresh = 0.01,
+  run = FALSE
+)
 }
 \arguments{
 \item{image}{Input path of 'nifti' image or vector of path(s) to images. If multiple paths, the script will all mergeNiftis() and merge across time.}

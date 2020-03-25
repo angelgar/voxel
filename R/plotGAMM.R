@@ -23,19 +23,16 @@
 #'
 #'
 #' gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
+#' plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
+#'                     plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
+#' plot
 #'
-#'
-#' plot <- plotGAMM(gammFit <- gamm, smooth.cov <- "x", groupCovs = "group",
-#'                     plotCI <- T, rawOrFitted = "raw", grouping = "index.var")
-#'
-#' plot2 <- plotGAMM(gammFit <- gamm, smooth.cov <- "x", groupCovs = "group",
-#'                   plotCI <- T, rawOrFitted = "fitted", grouping = "index.var")
-
-
-
-
-
-plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F, rawOrFitted = F, plotCI = T, grouping = NULL) {
+#' plot2 <- plotGAMM(gammFit = gamm, smooth.cov <- "x", groupCovs = "group",
+#'                   plotCI = TRUE, rawOrFitted = "fitted", grouping = "index.var")
+#' plot2
+plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL,
+                     orderedAsFactor = TRUE, rawOrFitted = FALSE,
+                     plotCI = TRUE, grouping = NULL) {
 
   if (missing(gammFit)) {
     stop("gammFit is missing")}
@@ -45,7 +42,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     stop("smooth.cov must be a character")}
   if (class(groupCovs) != "character" & (!is.null(groupCovs))) {
     stop("groupCovs must be a character")}
-  if (!(rawOrFitted == F | rawOrFitted == "raw" | rawOrFitted == "fitted")) {
+  if (!(rawOrFitted == FALSE | rawOrFitted == "raw" | rawOrFitted == "fitted")) {
     stop("Wrong input for rawOrFitted")
   }
 
@@ -54,8 +51,6 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
   if (!(base::class(gammFit$gam) == "gam" & base::class(gammFit$mer) == "lmerMod")) {
     stop("gamFit is not a object created by gamm4()")
   }
-
-
 
   if (base::is.character(rawOrFitted)) {
     if (((rawOrFitted == "raw") & base::is.null(grouping))) {
@@ -82,7 +77,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     }
 
     if (is.character(grouping)) {
-      temp.data[grouping] <- as.factor(temp.data[grouping][,1])
+      temp.data[grouping] <- as.factor(temp.data[grouping][[1]])
     }
 
 
@@ -92,23 +87,23 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     main.smooth <- base::paste0("s(", smooth.cov)
     interaction.smooth <- base::paste0("s(", smooth.cov, ",by=")
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE)) {
       base::stop("smooth.cov is not included in formula for original model fit")
     }
 
-    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    if (base::grepl(pattern = interaction.smooth, old.covariates, fixed=TRUE)) {
       base::stop("smooth.cov has an interaction term in original model fit, pass groupCovs as an argument")
     }
 
-    plot.df = base::data.frame( x = base::seq(min(temp.data[smooth.cov]), max(temp.data[smooth.cov]), length.out=200))
+    plot.df = base::data.frame( x = base::seq(min(temp.data[[smooth.cov]]), max(temp.data[[smooth.cov]]), length.out=200))
     base::names(plot.df) <- smooth.cov
 
     for (i in names(gam$var.summary)) {
       if (i != smooth.cov) {
-        if (base::any(base::class(temp.data[i][,1])[1] == c("numeric", "integer","boolean"))) {
-          plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][,1])
+        if (base::any(base::class(temp.data[i][[1]])[1] == c("numeric", "integer","boolean"))) {
+          plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][[1]])
           base::names(plot.df)[base::dim(plot.df)[2]] <- i
-        } else if (base::any(base::class(temp.data[i][,1])[1] == c("character", "factor","ordered"))) {
+        } else if (base::any(base::class(temp.data[i][[1]])[1] == c("character", "factor","ordered"))) {
           plot.df[, base::dim(plot.df)[2] + 1] <- temp.data[i][1,1]
           base::names(plot.df)[base::dim(plot.df)[2]] <- i
         } else {
@@ -127,7 +122,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     plot.df = base::cbind(plot.df, base::as.data.frame(mgcv::predict.gam(gam, plot.df, se.fit = TRUE)))
 
     if (plotCI) {
-      plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+      plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                + ggplot2::geom_line(ggplot2::aes(y=fit), size=1)
                + ggplot2::geom_ribbon(data=plot.df, ggplot2::aes(ymax = fit+1.96*se.fit, ymin = fit-1.96*se.fit, linetype=NA), alpha = .2)
                + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], "  vs. s(",smooth.cov,")"))
@@ -135,7 +130,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
                + ggplot2::xlab(base::paste0("s(",smooth.cov,")"))
                + ggplot2::theme_bw())
     } else {
-      plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+      plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                + ggplot2::geom_line(ggplot2::aes(y=fit), size=1)
                + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], "  vs. s(",smooth.cov,")"))
                + ggplot2::ylab(base::paste0("Predicted ", base::as.character(old.formula)[2]))
@@ -145,21 +140,29 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
 
     if (base::is.character(rawOrFitted)) {
       if (rawOrFitted == "raw" & base::is.null(grouping)) {
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1]))
+        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[[smooth.cov]],
+                                                                          y=temp.data[[1]]))
         base::return(plot)
 
       } else if (rawOrFitted == "fitted" & base::is.null(grouping)) {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=fitted))
+        plot <- plot + ggplot2::geom_point(data = temp.data,
+                                           ggplot2::aes(x=temp.data[[smooth.cov]], y=fitted))
         base::return(plot)
 
       } else if (rawOrFitted == "raw" & base::is.character(grouping)) {
-        plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1], group=factor(temp.data[grouping][,1])), alpha=.2)
+        plot <- plot + ggplot2::geom_line(data = temp.data,
+                                          ggplot2::aes(x=temp.data[[smooth.cov]],
+                                                       y=temp.data[[1]],
+                                                       group=factor(temp.data[grouping][[1]])), alpha=.2)
         base::return(plot)
 
       } else if (rawOrFitted == "fitted" & base::is.character(grouping)) {
         temp.data$fitted <- gam$fitted.values
-        plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=fitted, group=factor(temp.data[grouping][,1])), alpha=.2)
+        plot <- plot + ggplot2::geom_line(data = temp.data,
+                                          ggplot2::aes(x=temp.data[[smooth.cov]],
+                                                       y=fitted,
+                                                       group=factor(temp.data[grouping][[1]])), alpha=.2)
         base::return(plot)
 
       }
@@ -181,7 +184,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     }
 
     if (is.character(grouping)) {
-      temp.data[grouping] <- as.factor(temp.data[grouping][,1])
+      temp.data[grouping] <- as.factor(temp.data[grouping][[1]])
     }
 
 
@@ -197,14 +200,14 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
 
 
     main.group <- base::paste0("+", groupCovs)
-    if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+    if (!base::grepl(pattern = main.group, old.covariates, fixed=TRUE)) {
       base::stop("Error groupCovs is not included as a main effect in original model, include in original fit")
     }
 
-    temp.fm <- strsplit(old.covariates, split='+', fixed = T)[[1]]
+    temp.fm <- strsplit(old.covariates, split='+', fixed = TRUE)[[1]]
     for (i in 1:length(temp.fm)) {
-      if (grepl(main.smooth, temp.fm[i], fixed=T)) {
-        temp.term <- strsplit(temp.fm[i], split=',', fixed = T)[[1]]
+      if (grepl(main.smooth, temp.fm[i], fixed=TRUE)) {
+        temp.term <- strsplit(temp.fm[i], split=',', fixed = TRUE)[[1]]
         if (length(temp.term) > 1) {
           for (j in 2:length(temp.term)) {
             if (grepl('=',temp.term[j])) {
@@ -236,26 +239,26 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     old.covariates <- base::gsub(" ", "", old.covariates)
 
 
-    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=T) &
-        base::class(temp.data[groupCovs][,1])[1] == "ordered") {
+    if (!base::grepl(pattern = main.smooth, old.covariates, fixed=TRUE) &
+        base::class(temp.data[groupCovs][[1]])[1] == "ordered") {
       base::stop("smooth.cov is not included in formula for original model fit, model might be incorrectly parametrized")
-    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=T)) {
+    } else if (!base::grepl(pattern = interaction.smooth, old.covariates, fixed=TRUE)) {
       base::warning("smooth.cov has no interaction term in original model fit")
 
 
-      foo <-  base::seq(min(temp.data[smooth.cov]), max(temp.data[smooth.cov]), length.out=200)
-      plot.df = base::data.frame( x = rep(foo, nlevels(as.factor(temp.data[groupCovs][,1]))))
+      foo <-  base::seq(min(temp.data[[smooth.cov]]), max(temp.data[[smooth.cov]]), length.out=200)
+      plot.df = base::data.frame( x = rep(foo, nlevels(as.factor(temp.data[groupCovs][[1]]))))
       base::names(plot.df) <- smooth.cov
 
-      plot.df$temp <- rep(levels(as.factor(temp.data[groupCovs][,1])), each = 200)
+      plot.df$temp <- rep(levels(as.factor(temp.data[groupCovs][[1]])), each = 200)
       base::names(plot.df)[2] <- groupCovs
 
       for (i in names(gam$var.summary)) {
         if (!(i == smooth.cov | i == groupCovs)) {
-          if (base::any(base::class(temp.data[i][,1])[1] == c("numeric", "integer","boolean"))) {
-            plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][,1])
+          if (base::any(base::class(temp.data[i][[1]])[1] == c("numeric", "integer","boolean"))) {
+            plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][[1]])
             base::names(plot.df)[base::dim(plot.df)[2]] <- i
-          } else if (base::any(base::class(temp.data[i][,1])[1] == c("character", "factor","ordered"))) {
+          } else if (base::any(base::class(temp.data[i][[1]])[1] == c("character", "factor","ordered"))) {
             plot.df[, base::dim(plot.df)[2] + 1] <- temp.data[i][1,1]
             base::names(plot.df)[base::dim(plot.df)[2]] <- i
           } else {
@@ -268,7 +271,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
       plot.df$group <- plot.df[,2]
 
       if (plotCI) {
-        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                  + ggplot2::geom_line(ggplot2::aes(y=fit, col=factor(group)), size=1)
                  + ggplot2::geom_ribbon(data=plot.df, ggplot2::aes(ymax = fit+1.96*se.fit, ymin = fit-1.96*se.fit, col=factor(group), linetype=NA), alpha = .2)
                  + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], " vs. s(",smooth.cov,")"))
@@ -278,7 +281,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
                  + ggplot2::theme_bw())
 
       } else {
-        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                  + ggplot2::geom_line(ggplot2::aes(y=fit, col=factor(group)), size=1)
                  + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], " vs. s(",smooth.cov,")"))
                  + ggplot2::ylab(base::paste0("Predicted ", base::as.character(old.formula)[2]))
@@ -290,41 +293,42 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
 
       if (base::is.character(rawOrFitted)) {
         if (rawOrFitted == "raw" & base::is.null(grouping)) {
-          plot <- plot +
-                  ggplot2::geom_point(data = temp.data,
-                                      ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]),
-                                                   y=temp.data[,1],
-                                                   col=factor(temp.data[groupCovs][,1])))
+          plot <-
+            plot + ggplot2::geom_point(data = temp.data,
+                                       ggplot2::aes(
+                                         x = temp.data[[smooth.cov]],
+                                         y = temp.data[[1]],
+                                         col = factor(temp.data[groupCovs][[1]])
+                                       ))
           base::return(plot)
 
-        } else if (rawOrFitted == "fitted" & base::is.null(grouping)) {
+        } else if (rawOrFitted == "fitted" &
+                   base::is.null(grouping)) {
           temp.data$fitted <- gam$fitted.values
-          plot <- plot +
-                  ggplot2::geom_point(data = temp.data,
-                                      ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]),
-                                                   y=fitted,
-                                                   col=factor(temp.data[groupCovs][,1])))
+          plot <- plot + ggplot2::geom_point(data = temp.data,
+                                             ggplot2::aes(
+                                               x = temp.data[[smooth.cov]],
+                                               y = fitted,
+                                               col = factor(temp.data[groupCovs][[1]])
+                                             ))
           base::return(plot)
 
         } else if (rawOrFitted == "raw" & base::is.character(grouping)) {
-          plot <- plot +
-                  ggplot2::geom_line(data = temp.data,
-                                     ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]),
-                                                  y=temp.data[,1],
-                                                  group=factor(temp.data[grouping][,1]),
-                                                  col=factor(temp.data[groupCovs][,1])),
-                                     alpha=.4)
+          plot <- plot + ggplot2::geom_line(data = temp.data,
+                                            ggplot2::aes(x=temp.data[[smooth.cov]],
+                                                         y=temp.data[[1]],
+                                                         group=factor(temp.data[grouping][[1]]),
+                                                         col=factor(temp.data[groupCovs][[1]])),
+                                            alpha=.4)
           base::return(plot)
 
         } else if (rawOrFitted == "fitted" & base::is.character(grouping)) {
           temp.data$fitted <- gam$fitted.values
-          plot <- plot +
-                  ggplot2::geom_line(data = temp.data,
-                                     ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]),
-                                                  y=fitted,
-                                                  group=factor(temp.data[grouping][,1]),
-                                                  col=factor(temp.data[groupCovs][,1])),
-                                     alpha=.4)
+          plot <- plot + ggplot2::geom_line(data = temp.data,
+                                            ggplot2::aes(x=temp.data[[smooth.cov]],
+                                                         y=fitted,
+                                                         group=factor(temp.data[grouping][[1]]),
+                                                         col=factor(temp.data[groupCovs][[1]])), alpha=.4)
           base::return(plot)
         }
       } else {
@@ -334,19 +338,19 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
     } else {
 
       main.group <- base::paste0("+", groupCovs)
-      if (!base::grepl(pattern = main.group, old.covariates, fixed=T)) {
+      if (!base::grepl(pattern = main.group, old.covariates, fixed=TRUE)) {
         base::stop("groupCovs is not included as main effect in original model, please include in original fit")
       }
 
-      orderedAsFactor <- F
+      orderedAsFactor <- FALSE
+      print("orderedAsFactor functionality temporally disabled")
 
-
-      if (base::class(temp.data[groupCovs][,1])[1] == "ordered" & orderedAsFactor) {
+      if (base::class(temp.data[groupCovs][[1]])[1] == "ordered" & orderedAsFactor) {
         base::warning("groupCovs is an ordered variable in original fit, reffiting model with groupCovs as a factor")
-        temp.data[groupCovs] <- as.factor(as.character(temp.data[groupCovs][,1]))
+        temp.data[groupCovs] <- as.factor(as.character(temp.data[groupCovs][[1]]))
 
         textCall <- gam$call
-        updatedCovs <- base::gsub(main.smooth, replacement = "", old.covariates, fixed = T)
+        updatedCovs <- base::gsub(main.smooth, replacement = "", old.covariates, fixed = TRUE)
         updatedformula <- stats::as.formula(paste(old.formula[2], old.formula[1], updatedCovs))
         new.data <- temp.data
 
@@ -361,19 +365,19 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
       interaction.smooth <- base::paste0("s(", smooth.cov, ",by=")
 
 
-      foo <-  base::seq(min(temp.data[smooth.cov]), max(temp.data[smooth.cov]), length.out=200)
-      plot.df = base::data.frame( x = rep(foo, nlevels(temp.data[groupCovs][,1])))
+      foo <-  base::seq(min(temp.data[[smooth.cov]]), max(temp.data[[smooth.cov]]), length.out=200)
+      plot.df = base::data.frame( x = rep(foo, nlevels(temp.data[groupCovs][[1]])))
       base::names(plot.df) <- smooth.cov
 
-      plot.df$temp <- rep(levels(temp.data[groupCovs][,1]), each = 200)
+      plot.df$temp <- rep(levels(temp.data[groupCovs][[1]]), each = 200)
       base::names(plot.df)[2] <- groupCovs
 
       for (i in names(gam$var.summary)) {
         if (!(i == smooth.cov | i == groupCovs)) {
-          if (base::any(base::class(temp.data[i][,1])[1] == c("numeric", "integer","boolean"))) {
-            plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][,1])
+          if (base::any(base::class(temp.data[i][[1]])[1] == c("numeric", "integer","boolean"))) {
+            plot.df[, base::dim(plot.df)[2] + 1] <- base::mean(temp.data[i][[1]])
             base::names(plot.df)[base::dim(plot.df)[2]] <- i
-          } else if (base::any(base::class(temp.data[i][,1])[1] == c("character", "factor","ordered"))) {
+          } else if (base::any(base::class(temp.data[i][[1]])[1] == c("character", "factor","ordered"))) {
             plot.df[, base::dim(plot.df)[2] + 1] <- temp.data[i][1,1]
             base::names(plot.df)[base::dim(plot.df)[2]] <- i
           } else {
@@ -386,7 +390,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
       plot.df$group <- plot.df[,2]
 
       if (plotCI) {
-        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                  + ggplot2::geom_line(ggplot2::aes(y=fit, col=factor(group)), size=1)
                  + ggplot2::geom_ribbon(data=plot.df, ggplot2::aes(ymax = fit+1.96*se.fit, ymin = fit-1.96*se.fit, col=factor(group), linetype=NA), alpha = .2)
                  + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], "  vs. s(",smooth.cov,")"))
@@ -395,7 +399,7 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
                  + ggplot2::scale_colour_discrete(name = groupCovs)
                  + ggplot2::theme_bw())
       } else {
-        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[,1]))
+        plot <- (ggplot2::ggplot(data=plot.df, ggplot2::aes(x=plot.df[[1]]))
                  + ggplot2::geom_line(ggplot2::aes(y=fit, col=factor(group)), size=1)
                  + ggplot2::ggtitle(base::paste0(base::as.character(old.formula)[2], "  vs. s(",smooth.cov,")"))
                  + ggplot2::ylab(base::paste0("Predicted ", base::as.character(old.formula)[2]))
@@ -407,21 +411,21 @@ plotGAMM <- function(gammFit, smooth.cov , groupCovs = NULL, orderedAsFactor = F
 
       if (base::is.character(rawOrFitted)) {
         if (rawOrFitted == "raw" & base::is.null(grouping)) {
-          plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1], col=factor(temp.data[groupCovs][,1])))
+          plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[[smooth.cov]], y=temp.data[[1]], col=factor(temp.data[groupCovs][[1]])))
           base::return(plot)
 
         } else if (rawOrFitted == "fitted" & base::is.null(grouping)) {
           temp.data$fitted <- gam$fitted.values
-          plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=fitted, col=factor(temp.data[groupCovs][,1])))
+          plot <- plot + ggplot2::geom_point(data = temp.data, ggplot2::aes(x=temp.data[[smooth.cov]], y=fitted, col=factor(temp.data[groupCovs][[1]])))
           base::return(plot)
 
         } else if (rawOrFitted == "raw" & base::is.character(grouping)) {
-          plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=temp.data[,1], group=factor(temp.data[grouping][,1]), col=factor(temp.data[groupCovs][,1])), alpha=.4)
+          plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x=temp.data[[smooth.cov]], y=temp.data[[1]], group=factor(temp.data[grouping][[1]]), col=factor(temp.data[groupCovs][[1]])), alpha=.4)
           base::return(plot)
 
         } else if (rawOrFitted == "fitted" & base::is.character(grouping)) {
           temp.data$fitted <- gam$fitted.values
-          plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x = purrr::as_vector(temp.data[smooth.cov]), y=fitted, group=factor(temp.data[grouping][,1]), col=factor(temp.data[groupCovs][,1])), alpha=.4)
+          plot <- plot + ggplot2::geom_line(data = temp.data, ggplot2::aes(x=temp.data[[smooth.cov]], y=fitted, group=factor(temp.data[grouping][[1]]), col=factor(temp.data[groupCovs][[1]])), alpha=.4)
           base::return(plot)
 
         }

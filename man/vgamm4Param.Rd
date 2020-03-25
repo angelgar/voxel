@@ -2,10 +2,19 @@
 % Please edit documentation in R/vgamm4Param.R
 \name{vgamm4Param}
 \alias{vgamm4Param}
-\title{Run a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image and return parametric and smooth coefficients}
+\title{Run a Generalized Additive Mixed Effects Model on all voxels of a NIfTI image within a mask and and return parametric and smooth coefficients tables}
 \usage{
-vgamm4Param(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
-  mc.preschedule = TRUE, ncores = 1, ...)
+vgamm4Param(
+  image,
+  mask,
+  fourdOut = NULL,
+  formula,
+  randomFormula,
+  subjData,
+  mc.preschedule = TRUE,
+  ncores = 1,
+  ...
+)
 }
 \arguments{
 \item{image}{Input image of type 'nifti' or vector of path(s) to images. If multiple paths, the script will all mergeNifti() and merge across time.}
@@ -30,7 +39,7 @@ vgamm4Param(image, mask, fourdOut = NULL, formula, randomFormula, subjData,
 Return list of parametric and spline coefficients (include standard errors and p-values) fitted to each voxel over the masked images passed to function.
 }
 \description{
-This function is able to run a Generalized Mixed Effects Model (GAMM) using the gamm4() function. 
+This function is able to run a Generalized Mixed Effects Model (GAMM) using the gamm4() function.
 The analysis will run in all voxels in in the mask and will return parametric and smooth coefficients.
 }
 \examples{
@@ -42,8 +51,7 @@ set.seed(1)
 covs <- data.frame(x = runif(25), y = runif(25), id = rep(1:5,5))
 fm1 <- "~ s(x) + s(y)"
 randomFormula <- "~(1|id)"
-models <- vgamm4Param(image, mask, formula = fm1, 
+models <- vgamm4Param(image, mask, formula = fm1,
                  randomFormula = randomFormula, subjData = covs, ncores = 1, REML=TRUE)
-
 }
 \keyword{internal}

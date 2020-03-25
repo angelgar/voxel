@@ -4,8 +4,14 @@
 \alias{plotGAM}
 \title{GAM plotting using ggplot2}
 \usage{
-plotGAM(gamFit, smooth.cov, groupCovs = NULL, orderedAsFactor = T,
-  rawOrFitted = F, plotCI = T)
+plotGAM(
+  gamFit,
+  smooth.cov,
+  groupCovs = NULL,
+  orderedAsFactor = TRUE,
+  rawOrFitted = FALSE,
+  plotCI = TRUE
+)
 }
 \arguments{
 \item{gamFit}{fitted gam model as produced by mgcv::gam()}
@@ -42,5 +48,7 @@ plot2 <- plotGAM(gamFit = gam, smooth.cov = "x", groupCovs = "group",
                              rawOrFitted = "raw", orderedAsFactor = FALSE)
 }
 \seealso{
-Other Plotting: \code{\link{plotGAMM}}
+Other Plotting: 
+\code{\link{plotGAMM}()}
 }
+\concept{Plotting}

@@ -4,8 +4,15 @@
 \alias{plotGAMM}
 \title{GAMM plotting using ggplot2}
 \usage{
-plotGAMM(gammFit, smooth.cov, groupCovs = NULL, orderedAsFactor = F,
-  rawOrFitted = F, plotCI = T, grouping = NULL)
+plotGAMM(
+  gammFit,
+  smooth.cov,
+  groupCovs = NULL,
+  orderedAsFactor = TRUE,
+  rawOrFitted = FALSE,
+  plotCI = TRUE,
+  grouping = NULL
+)
 }
 \arguments{
 \item{gammFit}{fitted gam model as produced by gamm4::gamm()}
@@ -38,14 +45,16 @@ data$group <- ordered(data$group)
 
 
 gamm <- gamm4::gamm4(y ~ + s(x) + s(x, by=group) + z + group, data=data, random = ~ (1|index.var))
+plot <- plotGAMM(gammFit = gamm, smooth.cov =  "x", groupCovs = "group",
+                    plotCI = TRUE, rawOrFitted = "raw", grouping = "index.var")
+plot
 
-
-plot <- plotGAMM(gammFit <- gamm, smooth.cov <- "x", groupCovs = "group",
-                    plotCI <- T, rawOrFitted = "raw", grouping = "index.var")
-
-plot2 <- plotGAMM(gammFit <- gamm, smooth.cov <- "x", groupCovs = "group",
-                  plotCI <- T, rawOrFitted = "fitted", grouping = "index.var")
+plot2 <- plotGAMM(gammFit = gamm, smooth.cov <- "x", groupCovs = "group",
+                  plotCI = TRUE, rawOrFitted = "fitted", grouping = "index.var")
+plot2
 }
 \seealso{
-Other Plotting: \code{\link{plotGAM}}
+Other Plotting: 
+\code{\link{plotGAM}()}
 }
+\concept{Plotting}
